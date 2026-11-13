@@ -408,7 +408,7 @@ html body.pg-presentes {
 
 /* Logo do casal (azul e dourado) dos dois lados do título, como enfeite de jornal */
 .capa__logo {
-  height: 0.72em;
+  height: 0.95em;
   width: auto;
   vertical-align: 0.02em;
   margin: 0 0.25em;
@@ -1297,7 +1297,7 @@ html body.pg-presentes {
     width: auto;
     max-width: 100%;
     align-self: center;
-    aspect-ratio: 857 / 1280;
+    aspect-ratio: 777 / 1040;
     object-fit: contain;
   }
 
@@ -1544,7 +1544,7 @@ html body.pg-presentes {
   }
 
   .capa__logo {
-    height: 0.55em;
+    height: 0.78em;
     margin: 0 0.08em;
   }
 
