@@ -16,12 +16,13 @@ const NOMES = [
   ["Alexandre", "Alexandre"],
   ["Nós dois", "Nós dois"],
   ["Presentes", "Presentes"],
+  ["Informações", "Informações"],
 ];
 let atual = 0;
 
 // Notebook de tela baixa: monta o jornal numa tela "virtual" de ALTURA_MINIMA
 // e encolhe tudo junto (zoom), em vez de cortar fotos ou apertar o texto.
-const ALTURA_MINIMA = 820;
+const ALTURA_MINIMA = 880;
 
 function ajustarTamanho() {
   const raiz = document.documentElement;
@@ -80,10 +81,8 @@ paginas.forEach((pagina, i) => {
   pagina.appendChild(rodape);
 });
 
-// A página de informações fica fora do folhear (abas, setas, teclado e dedo):
-// só se chega nela pelo botão "Informações" ou pelo índice da capa.
-const INDICE_INFO = PAGINA_INFO - 1;
-const ULTIMA_FOLHEAVEL = INDICE_INFO >= 0 ? INDICE_INFO - 1 : paginas.length - 1;
+// Todas as páginas entram no folhear (abas, setas, teclado e dedo)
+const ULTIMA_FOLHEAVEL = paginas.length - 1;
 
 function folhear(passo) {
   const alvo = atual + passo;
@@ -91,9 +90,8 @@ function folhear(passo) {
   irPara(alvo);
 }
 
-// Índice do rodapé (um botão para cada página, menos a de informações)
+// Índice do rodapé (um botão para cada página)
 const botoesIndice = paginas.map((_, i) => {
-  if (i === INDICE_INFO) return null;
   const [longo, curto] = NOMES[i] || [`Pág. ${i + 1}`, `${i + 1}`];
   const b = document.createElement("button");
   b.type = "button";

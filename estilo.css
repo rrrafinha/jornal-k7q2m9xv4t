@@ -1812,9 +1812,24 @@ html body.pg-presentes {
   margin: 0.3rem 0 0.4rem 0.9rem;
 }
 
+/* Casarão: foto maior e texto curto, em letra menor, ao lado */
+.historia__anel--casa img {
+  height: min(calc(var(--vh) * 22), 240px);
+}
+
+.historia__texto .texto--casa {
+  font-size: 0.85em;
+  text-align: left;
+}
+
 .historia__anel--esquerda {
   float: left;
   margin: 0.3rem 0.9rem 0.4rem 0;
+}
+
+/* Seção com foto não se divide entre duas colunas (título, foto e texto juntos) */
+.historia__texto section:has(.historia__anel) {
+  break-inside: avoid;
 }
 
 .historia__texto section::after {
