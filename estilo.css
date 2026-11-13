@@ -4,11 +4,11 @@
    ============================================================ */
 
 :root {
-  --papel: #ece3cf;          /* papel envelhecido */
-  --papel-claro: #f4eddc;
-  --tinta: #1b1916;          /* tinta preta de jornal */
-  --tinta-suave: #4a443b;
-  --fio: rgba(27, 25, 22, 0.85);
+  --papel: #efd690;          /* folha amarela, do dourado do logo */
+  --papel-claro: #f6e6b4;
+  --tinta: #14285c;          /* tinta azul-marinho, do azul do logo */
+  --tinta-suave: #3d4d7a;
+  --fio: rgba(20, 40, 92, 0.85);
 
   /* 1% da altura e da largura da tela. Em notebook de tela baixa, o jornal.js
      troca por uma tela "virtual" maior e encolhe tudo junto (zoom), sem cortar nada */
@@ -40,7 +40,7 @@ html body.pg-presentes {
   align-items: center;
   justify-content: center;
   gap: 0.8rem;
-  background: radial-gradient(ellipse at center, #8a7e68 0%, #5e5446 70%, #463e33 100%);
+  background: radial-gradient(ellipse at center, #2c3f73 0%, #1a2a52 70%, #10193a 100%);
   color: var(--tinta);
   font-family: var(--fonte-texto);
 }
@@ -63,7 +63,7 @@ html body.pg-presentes {
   padding: 1.6rem 2.2rem 2rem;
   background:
     var(--textura),
-    linear-gradient(100deg, #e4d9c1 0%, var(--papel-claro) 6%, var(--papel) 75%, #e2d6bc 100%);
+    linear-gradient(100deg, #e6c877 0%, var(--papel-claro) 6%, var(--papel) 75%, #e3c46f 100%);
   box-shadow:
     0 1px 2px rgba(0, 0, 0, 0.2),
     0 18px 40px rgba(0, 0, 0, 0.35);
@@ -72,7 +72,7 @@ html body.pg-presentes {
   backface-visibility: hidden;
   transition: transform 0.9s cubic-bezier(.55, .05, .3, 1), opacity 0.9s ease, visibility 0s linear 0s;
   scrollbar-width: thin;
-  scrollbar-color: rgba(27, 25, 22, 0.4) transparent;
+  scrollbar-color: rgba(20, 40, 92, 0.4) transparent;
 }
 
 .pagina:focus {
@@ -491,7 +491,7 @@ html body.pg-presentes {
 .colunas-texto {
   columns: 2;
   column-gap: 1.4rem;
-  column-rule: 1px solid rgba(27, 25, 22, 0.35);
+  column-rule: 1px solid rgba(20, 40, 92, 0.35);
 }
 
 .colunas-texto .texto {
@@ -602,14 +602,14 @@ html body.pg-presentes {
 
 /* Fio vertical entre a foto e o texto do perfil */
 .perfil__texto {
-  border-left: 1px solid rgba(27, 25, 22, 0.35);
+  border-left: 1px solid rgba(20, 40, 92, 0.35);
   padding-left: 1.6rem;
 }
 
 .perfil--invertido .perfil__texto {
   border-left: none;
   padding-left: 0;
-  border-right: 1px solid rgba(27, 25, 22, 0.35);
+  border-right: 1px solid rgba(20, 40, 92, 0.35);
   padding-right: 1.6rem;
 }
 
@@ -620,7 +620,7 @@ html body.pg-presentes {
   outline-offset: 3px;
   padding: 0.9rem 1rem;
   margin-top: 1rem;
-  background: rgba(27, 25, 22, 0.05);
+  background: rgba(20, 40, 92, 0.05);
 }
 
 .ficha h3 {
@@ -696,15 +696,15 @@ html body.pg-presentes {
   color: var(--tinta);
   background: none;
   border: none;
-  border-right: 1px solid rgba(27, 25, 22, 0.15);
-  border-bottom: 1px solid rgba(27, 25, 22, 0.15);
+  border-right: 1px solid rgba(20, 40, 92, 0.15);
+  border-bottom: 1px solid rgba(20, 40, 92, 0.15);
   padding: 0;
   cursor: pointer;
   touch-action: manipulation;
 }
 
 .passatempo__letra:hover {
-  background: rgba(27, 25, 22, 0.08);
+  background: rgba(20, 40, 92, 0.08);
 }
 
 /* Primeira letra escolhida */
@@ -715,7 +715,7 @@ html body.pg-presentes {
 
 /* Letras de palavra encontrada: "riscadas" a lápis */
 .passatempo__letra--achada {
-  background: rgba(27, 25, 22, 0.22);
+  background: rgba(20, 40, 92, 0.22);
   text-decoration: underline;
   text-decoration-thickness: 2px;
 }
@@ -793,7 +793,7 @@ html body.pg-presentes {
 }
 
 .colunas-3 > * + * {
-  border-left: 1px solid rgba(27, 25, 22, 0.35);
+  border-left: 1px solid rgba(20, 40, 92, 0.35);
   padding-left: 1.4rem;
 }
 
@@ -866,7 +866,7 @@ html body.pg-presentes {
 .classificados__anuncios {
   columns: 3;
   column-gap: 1.2rem;
-  column-rule: 1px solid rgba(27, 25, 22, 0.35);
+  column-rule: 1px solid rgba(20, 40, 92, 0.35);
 }
 
 .anuncio {
@@ -1061,7 +1061,7 @@ html body.pg-presentes {
   .colunas-3 > * + * {
     border-left: none;
     padding-left: 0;
-    border-top: 1px solid rgba(27, 25, 22, 0.35);
+    border-top: 1px solid rgba(20, 40, 92, 0.35);
     padding-top: 0.9rem;
   }
 
@@ -1133,7 +1133,7 @@ html body.pg-presentes {
 }
 
 .historia__texto section + section {
-  border-top: 1px solid rgba(27, 25, 22, 0.35);
+  border-top: 1px solid rgba(20, 40, 92, 0.35);
   padding-top: 0.8rem;
   margin-top: 0.8rem;
 }
@@ -1253,7 +1253,7 @@ html body.pg-presentes {
   }
 
   .capa__texto {
-    border-right: 1px solid rgba(27, 25, 22, 0.35);
+    border-right: 1px solid rgba(20, 40, 92, 0.35);
     padding-right: 1.4rem;
   }
 
@@ -1340,7 +1340,7 @@ html body.pg-presentes {
   }
 
   .historia__texto {
-    border-left: 1px solid rgba(27, 25, 22, 0.35);
+    border-left: 1px solid rgba(20, 40, 92, 0.35);
     padding-left: 1.4rem;
   }
 
@@ -1371,7 +1371,7 @@ html body.pg-presentes {
   .historia__texto {
     columns: 2;
     column-gap: 1.4rem;
-    column-rule: 1px solid rgba(27, 25, 22, 0.35);
+    column-rule: 1px solid rgba(20, 40, 92, 0.35);
   }
 
   .historia__texto .titulo {
@@ -1464,7 +1464,7 @@ html body.pg-presentes {
   .classificados__materia {
     margin: 0;
     text-align: left;
-    border-right: 1px solid rgba(27, 25, 22, 0.35);
+    border-right: 1px solid rgba(20, 40, 92, 0.35);
     padding-right: 1.4rem;
   }
 
@@ -1484,7 +1484,7 @@ html body.pg-presentes {
   .classificados {
     columns: 3;
     column-gap: 1.2rem;
-    column-rule: 1px solid rgba(27, 25, 22, 0.35);
+    column-rule: 1px solid rgba(20, 40, 92, 0.35);
   }
 
   .classificados__anuncios {
