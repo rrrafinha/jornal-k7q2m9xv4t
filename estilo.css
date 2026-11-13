@@ -10,6 +10,11 @@
   --tinta-suave: #4a443b;
   --fio: rgba(27, 25, 22, 0.85);
 
+  /* 1% da altura e da largura da tela. Em notebook de tela baixa, o jornal.js
+     troca por uma tela "virtual" maior e encolhe tudo junto (zoom), sem cortar nada */
+  --vh: 1svh;
+  --vw: 1vw;
+
   --fonte-gotica: "UnifrakturMaguntia", "Old English Text MT", serif;
   --fonte-texto: "Old Standard TT", Georgia, serif;
   --fonte-manchete: "Playfair Display", Georgia, serif;
@@ -27,8 +32,7 @@
 
 /* A "mesa" onde o jornal está apoiado */
 html body.pg-presentes {
-  height: 100vh;
-  height: 100svh;
+  height: calc(var(--vh) * 100);
   overflow: hidden;
   padding: 0;
   display: flex;
@@ -45,8 +49,8 @@ html body.pg-presentes {
 
 .jornal {
   position: relative;
-  width: min(1000px, calc(100vw - 1.5rem));
-  height: calc(100svh - 5.2rem);
+  width: min(1000px, calc(calc(var(--vw) * 100) - 1.5rem));
+  height: calc(calc(var(--vh) * 100) - 5.2rem);
   perspective: 2200px;
 }
 
@@ -104,7 +108,7 @@ html body.pg-presentes {
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  max-width: calc(100vw - 1rem);
+  max-width: calc(calc(var(--vw) * 100) - 1rem);
 }
 
 .folhear__seta {
@@ -206,7 +210,7 @@ html body.pg-presentes {
 .manchete {
   font-family: var(--fonte-manchete);
   font-weight: 900;
-  font-size: clamp(2.2rem, 7vw, 3.8rem);
+  font-size: clamp(2.2rem, calc(var(--vw) * 7), 3.8rem);
   line-height: 1;
   text-align: center;
   margin: 0.2rem 0 0.4rem;
@@ -293,7 +297,7 @@ html body.pg-presentes {
 }
 
 .historia__anel img {
-  height: min(19vh, 200px);
+  height: min(calc(var(--vh) * 19), 200px);
   width: auto;
   max-width: 100%;
 }
@@ -315,7 +319,7 @@ html body.pg-presentes {
 .citacao {
   font-family: var(--fonte-manchete);
   font-style: italic;
-  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+  font-size: clamp(1.05rem, calc(var(--vw) * 2.4), 1.35rem);
   line-height: 1.4;
   text-align: center;
   padding: 0.8rem 1rem;
@@ -341,7 +345,7 @@ html body.pg-presentes {
 }
 
 .foto--grande {
-  height: min(42vh, 380px);
+  height: min(calc(var(--vh) * 42), 380px);
   margin-bottom: 1.2rem;
 }
 
@@ -391,7 +395,7 @@ html body.pg-presentes {
 .capa__nome {
   font-family: var(--fonte-gotica);
   font-weight: 400;
-  font-size: clamp(2.2rem, 5.4vw, 3.9rem);
+  font-size: clamp(2.2rem, calc(var(--vw) * 5.4), 3.9rem);
   line-height: 1;
   text-align: center;
   white-space: nowrap;
@@ -409,7 +413,7 @@ html body.pg-presentes {
   display: flex;
   justify-content: space-between;
   gap: 0.6rem;
-  font-size: clamp(0.62rem, 1.5vw, 0.8rem);
+  font-size: clamp(0.62rem, calc(var(--vw) * 1.5), 0.8rem);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -422,7 +426,7 @@ html body.pg-presentes {
 .capa__manchete {
   font-family: var(--fonte-manchete);
   font-weight: 900;
-  font-size: clamp(1.6rem, 5.4vw, 3.3rem);
+  font-size: clamp(1.6rem, calc(var(--vw) * 5.4), 3.3rem);
   line-height: 1.02;
   text-transform: uppercase;
   text-align: center;
@@ -434,7 +438,7 @@ html body.pg-presentes {
 .capa__sub {
   font-family: var(--fonte-texto);
   font-style: italic;
-  font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+  font-size: clamp(0.95rem, calc(var(--vw) * 2.2), 1.15rem);
   line-height: 1.4;
   text-align: center;
   max-width: 600px;
@@ -463,7 +467,7 @@ html body.pg-presentes {
 }
 
 .capa__foto {
-  height: min(38vh, 340px);
+  height: min(calc(var(--vh) * 38), 340px);
   object-position: center 40%;
 }
 
@@ -584,7 +588,7 @@ html body.pg-presentes {
 }
 
 .perfil__foto img {
-  height: min(48vh, 430px);
+  height: min(calc(var(--vh) * 48), 430px);
   object-position: center 25%;
 }
 
@@ -680,7 +684,7 @@ html body.pg-presentes {
   justify-content: center;
   font-family: var(--fonte-texto);
   font-weight: 700;
-  font-size: clamp(0.8rem, 2.4vw, 1.05rem);
+  font-size: clamp(0.8rem, calc(var(--vw) * 2.4), 1.05rem);
   color: var(--tinta);
   background: none;
   border: none;
@@ -805,7 +809,7 @@ html body.pg-presentes {
 .classificados__titulo {
   font-family: var(--fonte-manchete);
   font-weight: 900;
-  font-size: clamp(1.25rem, 3vw, 1.7rem);
+  font-size: clamp(1.25rem, calc(var(--vw) * 3), 1.7rem);
   line-height: 1.15;
   margin: 0.2rem 0 0.6rem;
 }
@@ -943,8 +947,8 @@ html body.pg-presentes {
   }
 
   .jornal {
-    width: calc(100vw - 0.8rem);
-    height: calc(100svh - 4.4rem);
+    width: calc(calc(var(--vw) * 100) - 0.8rem);
+    height: calc(calc(var(--vh) * 100) - 4.4rem);
   }
 
   .pagina {
@@ -973,7 +977,7 @@ html body.pg-presentes {
   }
 
   .capa__nome {
-    font-size: clamp(2rem, 11vw, 3rem);
+    font-size: clamp(2rem, calc(var(--vw) * 11), 3rem);
   }
 
   .capa__data {
@@ -1146,8 +1150,8 @@ html body.pg-presentes {
   }
 
   .jornal {
-    width: min(1500px, calc(100vw - 2rem));
-    height: calc(100svh - 4.4rem);
+    width: min(var(--largura-max, 1500px), calc(calc(var(--vw) * 100) - 2rem));
+    height: calc(calc(var(--vh) * 100) - 4.4rem);
   }
 
   /* A página vira uma coluna: cabeçalho em cima e o corpo ocupa o que sobra */
@@ -1179,7 +1183,7 @@ html body.pg-presentes {
   }
 
   .manchete {
-    font-size: clamp(2rem, 6.5vh, 3.6rem);
+    font-size: clamp(2rem, calc(var(--vh) * 6.5), 3.6rem);
     margin: 0.1rem 0 0.3rem;
   }
 
@@ -1206,7 +1210,7 @@ html body.pg-presentes {
   }
 
   .capa__nome {
-    font-size: clamp(2.4rem, 8.5vh, 5rem);
+    font-size: clamp(2.4rem, calc(var(--vh) * 8.5), 5rem);
   }
 
   .capa__data {
@@ -1214,7 +1218,7 @@ html body.pg-presentes {
   }
 
   .capa__manchete {
-    font-size: clamp(1.6rem, 6vh, 3.4rem);
+    font-size: clamp(1.6rem, calc(var(--vh) * 6), 3.4rem);
     margin-top: 0.5rem;
   }
 
@@ -1236,7 +1240,7 @@ html body.pg-presentes {
   }
 
   .capa__texto .texto {
-    font-size: clamp(0.8rem, 1.7vh, 1rem);
+    font-size: clamp(0.8rem, calc(var(--vh) * 1.7), 1rem);
     line-height: 1.5;
   }
 
@@ -1304,10 +1308,16 @@ html body.pg-presentes {
     margin-top: 0;
   }
 
+  /* Foto do pedido sempre inteira: a moldura encolhe para caber, sem cortar */
   .historia__foto .foto--grande {
-    flex: 1;
+    flex: 1 1 0;
     height: auto;
     min-height: 0;
+    width: auto;
+    max-width: 100%;
+    align-self: center;
+    aspect-ratio: 857 / 1280;
+    object-fit: contain;
     margin: 0;
   }
 
@@ -1322,7 +1332,7 @@ html body.pg-presentes {
   }
 
   .perfil__texto .texto {
-    font-size: clamp(0.8rem, 1.6vh, 1rem);
+    font-size: clamp(0.8rem, calc(var(--vh) * 1.6), 1rem);
     line-height: 1.5;
   }
 
@@ -1331,7 +1341,7 @@ html body.pg-presentes {
   }
 
   .perfil__texto .ficha p {
-    font-size: clamp(0.78rem, 1.5vh, 0.95rem);
+    font-size: clamp(0.78rem, calc(var(--vh) * 1.5), 0.95rem);
     line-height: 1.45;
   }
 
@@ -1347,13 +1357,13 @@ html body.pg-presentes {
   }
 
   .historia__texto .titulo {
-    font-size: clamp(1rem, 2.2vh, 1.3rem);
+    font-size: clamp(1rem, calc(var(--vh) * 2.2), 1.3rem);
     break-after: avoid;
   }
 
   .historia__texto .texto {
-    font-size: clamp(0.85rem, 1.9vh, 1.1rem);
-    line-height: 1.55;
+    font-size: clamp(0.72rem, calc(var(--vh) * 1.85), 1.1rem);
+    line-height: 1.5;
   }
 
   .historia__texto section + section {
@@ -1474,7 +1484,7 @@ html body.pg-presentes {
   }
 
   .classificados__titulo {
-    font-size: clamp(1.2rem, 3.4vh, 1.7rem);
+    font-size: clamp(1.2rem, calc(var(--vh) * 3.4), 1.7rem);
   }
 
   .passatempo__titulo {
@@ -1499,7 +1509,7 @@ html body.pg-presentes {
   }
 
   .manchete {
-    font-size: clamp(1.8rem, 5.6vh, 3rem);
+    font-size: clamp(1.8rem, calc(var(--vh) * 5.6), 3rem);
   }
 
   .classificados__materia .texto {
@@ -1579,40 +1589,40 @@ html body.pg-presentes {
 /* No computador o tamanho acompanha a altura da tela, para caber sem rolar */
 @media (min-width: 901px) {
   .anuncio {
-    padding-bottom: 0.45vh;
-    margin-bottom: 0.6vh;
+    padding-bottom: calc(var(--vh) * 0.45);
+    margin-bottom: calc(var(--vh) * 0.6);
   }
 
   .anuncio__texto {
-    font-size: clamp(0.92rem, 1.5vh + 0.2rem, 1.3rem);
+    font-size: clamp(0.92rem, calc(var(--vh) * 1.5) + 0.2rem, 1.3rem);
     line-height: 1.25;
   }
 
   .pagina--presentes .classificados__como {
-    font-size: clamp(0.95rem, 1.3vh + 0.2rem, 1.15rem);
+    font-size: clamp(0.95rem, calc(var(--vh) * 1.3) + 0.2rem, 1.15rem);
     line-height: 1.3;
   }
 
   .anuncio__preco {
-    font-size: clamp(1rem, 1.7vh + 0.2rem, 1.4rem);
+    font-size: clamp(1rem, calc(var(--vh) * 1.7) + 0.2rem, 1.4rem);
     margin-top: 0.1rem;
   }
 
   .anuncio__botao {
-    font-size: clamp(0.72rem, 1vh + 0.15rem, 0.95rem);
+    font-size: clamp(0.72rem, calc(var(--vh) * 1) + 0.15rem, 0.95rem);
     padding: 0.15rem 0.5rem;
     margin-top: 0.1rem;
   }
 
   .classificados__secao-titulo {
     break-after: avoid;
-    font-size: clamp(0.95rem, 1.5vh + 0.2rem, 1.3rem);
+    font-size: clamp(0.95rem, calc(var(--vh) * 1.5) + 0.2rem, 1.3rem);
     padding: 0.15rem;
-    margin-bottom: 0.6vh;
+    margin-bottom: calc(var(--vh) * 0.6);
   }
 
   .classificados__secao + .classificados__secao {
-    margin-top: 0.6vh;
+    margin-top: calc(var(--vh) * 0.6);
   }
 
   .anuncio--livre {
@@ -1620,11 +1630,11 @@ html body.pg-presentes {
   }
 
   .classificados__titulo {
-    font-size: clamp(1.3rem, 3.6vh, 2rem);
+    font-size: clamp(1.3rem, calc(var(--vh) * 3.6), 2rem);
   }
 
   .classificados__materia .texto {
-    font-size: clamp(0.92rem, 1.4vh + 0.2rem, 1.2rem);
+    font-size: clamp(0.92rem, calc(var(--vh) * 1.4) + 0.2rem, 1.2rem);
     line-height: 1.4;
   }
 
@@ -1681,11 +1691,11 @@ html body.pg-presentes {
   }
 
   .marca-dagua__letras {
-    font-size: clamp(5rem, 15vh, 9rem);
+    font-size: clamp(5rem, calc(var(--vh) * 15), 9rem);
   }
 
   .marca-dagua__data {
-    font-size: clamp(1.4rem, 3.6vh, 2.4rem);
+    font-size: clamp(1.4rem, calc(var(--vh) * 3.6), 2.4rem);
   }
 
   /* Na capa, fica embaixo do texto da coluna da esquerda (fora da foto) */
@@ -1699,7 +1709,7 @@ html body.pg-presentes {
   .historia__foto .foto--grande,
   .perfil__foto img.foto--inteira {
     height: auto;
-    max-height: 75svh;
+    max-height: calc(var(--vh) * 75);
     width: auto;
     max-width: 100%;
     margin-inline: auto;

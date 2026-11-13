@@ -18,6 +18,30 @@ const NOMES = [
 ];
 let atual = 0;
 
+// Notebook de tela baixa: monta o jornal numa tela "virtual" de ALTURA_MINIMA
+// e encolhe tudo junto (zoom), em vez de cortar fotos ou apertar o texto.
+const ALTURA_MINIMA = 760;
+
+function ajustarTamanho() {
+  const raiz = document.documentElement;
+  const escala = innerWidth > 900 && innerHeight < ALTURA_MINIMA ? innerHeight / ALTURA_MINIMA : 1;
+
+  if (escala < 1) {
+    raiz.style.setProperty("--vh", `${ALTURA_MINIMA / 100}px`);
+    raiz.style.setProperty("--vw", `${innerWidth / escala / 100}px`);
+    raiz.style.setProperty("--largura-max", `${1500 / escala}px`);
+    document.body.style.zoom = escala;
+  } else {
+    raiz.style.removeProperty("--vh");
+    raiz.style.removeProperty("--vw");
+    raiz.style.removeProperty("--largura-max");
+    document.body.style.zoom = "";
+  }
+}
+
+ajustarTamanho();
+addEventListener("resize", ajustarTamanho);
+
 // Marca d'água com o logo do casal (A ✦ M · 20.03.27) embaixo de cada página
 const LOGO = `
   <span class="marca-dagua__letras">
