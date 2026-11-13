@@ -401,6 +401,14 @@ html body.pg-presentes {
   white-space: nowrap;
 }
 
+/* Logo do casal (azul e dourado) dos dois lados do título, como enfeite de jornal */
+.capa__logo {
+  height: 0.72em;
+  width: auto;
+  vertical-align: 0.02em;
+  margin: 0 0.25em;
+}
+
 .cabecalho__lema {
   font-style: italic;
   font-size: 0.82rem;
@@ -1495,6 +1503,15 @@ html body.pg-presentes {
 
 /* Celular: capa em uma coluna só (foto, texto, notas) */
 @media (max-width: 600px) {
+  .capa__nome {
+    font-size: clamp(1.7rem, calc(var(--vw) * 9.5), 3rem);
+  }
+
+  .capa__logo {
+    height: 0.55em;
+    margin: 0 0.08em;
+  }
+
   .capa__corpo {
     grid-template-columns: 1fr;
     grid-template-areas: "foto" "texto" "lateral";
@@ -1668,8 +1685,8 @@ html body.pg-presentes {
 }
 
 .marca-dagua__letras svg {
-  width: 0.32em;
-  height: 0.32em;
+  width: 0.42em;
+  height: 0.42em;
   fill: currentColor;
 }
 

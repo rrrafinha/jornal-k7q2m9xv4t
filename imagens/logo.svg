@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-100 -100 200 200">
+  <!-- Logo do casal: quatro pétalas azuis em cruz e quatro douradas nas diagonais -->
+  <defs>
+    <path id="petala-longa" d="M0 -6 C-15 -34 -13 -66 0 -96 C13 -66 15 -34 0 -6 Z"/>
+    <path id="petala-curta" d="M0 -10 C-11 -30 -10 -50 0 -70 C10 -50 11 -30 0 -10 Z"/>
+  </defs>
+  <g fill="#d39a1c">
+    <use href="#petala-curta" transform="rotate(45)"/>
+    <use href="#petala-curta" transform="rotate(135)"/>
+    <use href="#petala-curta" transform="rotate(225)"/>
+    <use href="#petala-curta" transform="rotate(315)"/>
+  </g>
+  <g fill="#14285c">
+    <use href="#petala-longa"/>
+    <use href="#petala-longa" transform="rotate(90)"/>
+    <use href="#petala-longa" transform="rotate(180)"/>
+    <use href="#petala-longa" transform="rotate(270)"/>
+  </g>
+</svg>

@@ -42,11 +42,18 @@ function ajustarTamanho() {
 ajustarTamanho();
 addEventListener("resize", ajustarTamanho);
 
-// Marca d'água com o logo do casal (A ✦ M · 20.03.27) embaixo de cada página
+// Marca d'água com o logo do casal (A, flor de pétalas, M · 20.03.27) embaixo de cada página.
+// A flor é a mesma de imagens/logo.svg: 4 pétalas longas em cruz e 4 curtas nas diagonais.
+const PETALA_LONGA = "M0 -6 C-15 -34 -13 -66 0 -96 C13 -66 15 -34 0 -6 Z";
+const PETALA_CURTA = "M0 -10 C-11 -30 -10 -50 0 -70 C10 -50 11 -30 0 -10 Z";
+const FLOR = [0, 90, 180, 270]
+  .map((a) => `<path d="${PETALA_LONGA}" transform="rotate(${a})"/><path d="${PETALA_CURTA}" transform="rotate(${a + 45})"/>`)
+  .join("");
+
 const LOGO = `
   <span class="marca-dagua__letras">
     <span>A</span>
-    <svg viewBox="-4 -4 108 108"><path d="M50 0 C54 36 64 46 100 50 C64 54 54 64 50 100 C46 64 36 54 0 50 C36 46 46 36 50 0 Z"/></svg>
+    <svg viewBox="-100 -100 200 200">${FLOR}</svg>
     <span>M</span>
   </span>
   <span class="marca-dagua__data">20.03.27</span>`;
