@@ -8,6 +8,7 @@
   --papel-claro: #fbf4dc;
   --tinta: #14285c;          /* tinta azul-marinho, do azul do logo */
   --tinta-suave: #3d4d7a;
+  --ouro: #d39a1c;         /* dourado do logo (contornos de destaque) */
   --fio: rgba(20, 40, 92, 0.85);
 
   /* 1% da altura e da largura da tela. Em notebook de tela baixa, o jornal.js
@@ -383,11 +384,15 @@ html body.pg-presentes {
   gap: 1rem;
   border-top: 4px solid var(--fio);
   padding-top: 0.6rem;
+  /* Linha dourada logo abaixo da barra azul do topo */
+  background: linear-gradient(var(--ouro), var(--ouro)) left 3px / 100% 2px no-repeat;
 }
 
 /* "Orelhas": as caixinhas dos cantos do cabeçalho */
 .orelha {
   border: 1px solid var(--fio);
+  outline: 2px solid var(--ouro);   /* contorno dourado, como as caixas da contagem */
+  outline-offset: 2px;
   padding: 0.3rem 0.4rem;
   font-size: 0.66rem;
   line-height: 1.3;
@@ -2026,7 +2031,7 @@ html body.pg-presentes {
 .contagem__casa b {
   font-size: 2rem;
   padding: 0.2rem 0.3rem 0.1rem;
-  outline: 2px solid #d39a1c;
+  outline: 2px solid var(--ouro);
   outline-offset: 2px;
 }
 
