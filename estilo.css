@@ -1,0 +1,1722 @@
+/* ============================================================
+   "Correio do Amor" — jornal antigo para folhear
+   Papel envelhecido, tinta preta, fios finos e fotos em preto e branco
+   ============================================================ */
+
+:root {
+  --papel: #ece3cf;          /* papel envelhecido */
+  --papel-claro: #f4eddc;
+  --tinta: #1b1916;          /* tinta preta de jornal */
+  --tinta-suave: #4a443b;
+  --fio: rgba(27, 25, 22, 0.85);
+
+  --fonte-gotica: "UnifrakturMaguntia", "Old English Text MT", serif;
+  --fonte-texto: "Old Standard TT", Georgia, serif;
+  --fonte-manchete: "Playfair Display", Georgia, serif;
+  --fonte-cursiva: "Pinyon Script", cursive;
+
+  /* Textura de papel (granulado leve, desenhado pelo próprio navegador) */
+  --textura: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.25 0 0 0 0 0.2 0 0 0 0 0.12 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* A "mesa" onde o jornal está apoiado */
+html body.pg-presentes {
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  background: radial-gradient(ellipse at center, #8a7e68 0%, #5e5446 70%, #463e33 100%);
+  color: var(--tinta);
+  font-family: var(--fonte-texto);
+}
+
+/* ================= O JORNAL E A VIRADA DE PÁGINA ================= */
+
+.jornal {
+  position: relative;
+  width: min(1000px, calc(100vw - 1.5rem));
+  height: calc(100svh - 5.2rem);
+  perspective: 2200px;
+}
+
+.pagina {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;          /* no celular: rolar para baixo é rolar, para o lado é virar */
+  padding: 1.6rem 2.2rem 2rem;
+  background:
+    var(--textura),
+    linear-gradient(100deg, #e4d9c1 0%, var(--papel-claro) 6%, var(--papel) 75%, #e2d6bc 100%);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 18px 40px rgba(0, 0, 0, 0.35);
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transition: transform 0.9s cubic-bezier(.55, .05, .3, 1), opacity 0.9s ease, visibility 0s linear 0s;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(27, 25, 22, 0.4) transparent;
+}
+
+.pagina:focus {
+  outline: none;
+}
+
+/* Página já lida: virou para a esquerda e sumiu */
+.pagina--virada {
+  transform: rotateY(-120deg);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.9s cubic-bezier(.55, .05, .3, 1), opacity 0.9s ease, visibility 0s linear 0.9s;
+}
+
+/* Sombra da dobra enquanto a folha vira */
+.pagina::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.25), transparent 40%);
+  opacity: 0;
+  transition: opacity 0.9s;
+}
+
+.pagina--virada::after {
+  opacity: 1;
+}
+
+/* ---------- Controles para folhear ---------- */
+
+.folhear {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  max-width: calc(100vw - 1rem);
+}
+
+.folhear__seta {
+  width: 2.6rem;
+  height: 2.6rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid var(--papel-claro);
+  background: var(--papel-claro);
+  color: var(--tinta);
+  font-family: var(--fonte-manchete);
+  font-size: 1.8rem;
+  line-height: 1;
+  padding-bottom: 0.2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.folhear__seta:hover:not(:disabled) {
+  transform: scale(1.1);
+}
+
+.folhear__seta:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.folhear__indice {
+  display: flex;
+  gap: 0.3rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.folhear__item {
+  font-family: var(--fonte-texto);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--papel-claro);
+  background: none;
+  border: 1px solid rgba(244, 237, 220, 0.35);
+  padding: 0.35rem 0.7rem;
+  cursor: pointer;
+}
+
+/* No computador aparece o nome completo; no celular, o curto */
+.folhear__item .curto {
+  display: none;
+}
+
+.folhear__item--ativo {
+  background: var(--papel-claro);
+  color: var(--tinta);
+  border-color: var(--papel-claro);
+}
+
+/* ================= ELEMENTOS DE JORNAL ================= */
+
+/* Faixa no topo das páginas internas */
+.pagina__topo {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-top: 3px double var(--fio);
+  border-bottom: 3px double var(--fio);
+  padding: 0.25rem 0.1rem;
+  margin-bottom: 1.2rem;
+}
+
+/* Nome do jornal no meio da faixa, em letra gótica */
+.pagina__topo span:nth-child(2) {
+  font-family: var(--fonte-gotica);
+  font-weight: 400;
+  font-size: 1.5rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.pagina__topo span:last-child {
+  text-align: right;
+}
+
+.chapeu {
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+  text-align: center;
+}
+
+.manchete {
+  font-family: var(--fonte-manchete);
+  font-weight: 900;
+  font-size: clamp(2.2rem, 7vw, 3.8rem);
+  line-height: 1;
+  text-align: center;
+  margin: 0.2rem 0 0.4rem;
+}
+
+.linha-fina {
+  font-style: italic;
+  font-size: 1.1rem;
+  line-height: 1.45;
+  text-align: center;
+  max-width: 620px;
+  margin: 0 auto 1.2rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--fio);
+}
+
+.titulo {
+  font-family: var(--fonte-manchete);
+  font-weight: 700;
+  font-size: 1.3rem;
+  line-height: 1.15;
+  padding-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--fio);
+}
+
+.texto {
+  font-size: 1.02rem;
+  line-height: 1.6;
+  text-align: justify;
+  hyphens: auto;
+  margin-bottom: 0.8rem;
+}
+
+.texto--centro {
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto 1.2rem;
+}
+
+/* Letra capitular (a primeira letra grande dos jornais antigos).
+   Só aparece quando o texto de verdade entrar no lugar do provisório. */
+.texto--capitular:not(.a-definir)::first-letter {
+  float: left;
+  font-family: var(--fonte-manchete);
+  font-weight: 900;
+  font-style: normal;
+  font-size: 3.4em;
+  line-height: 0.85;
+  padding: 0.05em 0.1em 0 0;
+  color: var(--tinta);
+}
+
+.assinatura {
+  font-family: var(--fonte-cursiva);
+  font-size: 2rem;
+  text-align: right;
+  margin-top: 0.8rem;
+}
+
+/* Foto mostrada inteira, sem corte (a moldura se ajusta à foto) */
+.perfil__foto img.foto--inteira {
+  object-fit: contain;
+}
+
+@media (min-width: 901px) {
+  .perfil__foto:has(.foto--inteira) {
+    align-self: start;
+    max-height: 100%;
+  }
+
+  .perfil__foto img.foto--inteira {
+    flex: 0 1 auto;
+    height: auto;
+  }
+}
+
+/* Fotinho do anel, pequena, depois da assinatura */
+.historia__anel {
+  margin: 0.6rem auto 0;
+  width: fit-content;
+  max-width: 100%;
+  break-inside: avoid;
+}
+
+.historia__anel img {
+  height: min(19vh, 200px);
+  width: auto;
+  max-width: 100%;
+}
+
+.historia__anel figcaption {
+  font-size: 0.75rem;
+  font-style: italic;
+  text-align: center;
+  padding-top: 0.25rem;
+  color: var(--tinta-suave);
+}
+
+/* Textos que o casal ainda vai escrever */
+.a-definir {
+  font-style: italic;
+  color: var(--tinta-suave);
+}
+
+.citacao {
+  font-family: var(--fonte-manchete);
+  font-style: italic;
+  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+  line-height: 1.4;
+  text-align: center;
+  padding: 0.8rem 1rem;
+  margin: 0.6rem 0 1.2rem;
+  border-top: 3px double var(--fio);
+  border-bottom: 3px double var(--fio);
+}
+
+/* Fotos impressas em preto e branco, com moldura fina */
+.foto,
+.perfil__foto img,
+.capa__foto {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.08) sepia(0.12);
+}
+
+.foto {
+  border: 1px solid var(--fio);
+  padding: 4px;
+  background: var(--papel-claro);
+}
+
+.foto--grande {
+  height: min(42vh, 380px);
+  margin-bottom: 1.2rem;
+}
+
+/* Foto da Mariana: mostra a parte de baixo, com a placa e ela */
+.perfil__foto img.foto--mariana2 {
+  object-position: 60% 40%;
+}
+
+/* ================= PÁGINA 1: CAPA ================= */
+
+/* Cabeçalho de jornal de época: orelha | nome | orelha */
+.cabecalho {
+  display: grid;
+  grid-template-columns: 8rem 1fr 8rem;
+  align-items: center;
+  gap: 1rem;
+  border-top: 4px solid var(--fio);
+  padding-top: 0.6rem;
+}
+
+/* "Orelhas": as caixinhas dos cantos do cabeçalho */
+.orelha {
+  border: 1px solid var(--fio);
+  padding: 0.45rem 0.5rem;
+  font-size: 0.74rem;
+  line-height: 1.35;
+  text-align: center;
+  font-style: italic;
+}
+
+.orelha b {
+  display: block;
+  font-style: normal;
+  font-size: 0.64rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--fio);
+  padding-bottom: 0.2rem;
+  margin-bottom: 0.25rem;
+}
+
+.cabecalho__centro {
+  text-align: center;
+  min-width: 0;
+}
+
+.capa__nome {
+  font-family: var(--fonte-gotica);
+  font-weight: 400;
+  font-size: clamp(2.2rem, 5.4vw, 3.9rem);
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.cabecalho__lema {
+  font-style: italic;
+  font-size: 0.82rem;
+  color: var(--tinta-suave);
+  margin-top: 0.2rem;
+}
+
+/* Faixa "Ano I · Nº 1 | data | Edição Extra" entre fios duplos */
+.capa__data {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+  font-size: clamp(0.62rem, 1.5vw, 0.8rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-top: 3px double var(--fio);
+  border-bottom: 3px double var(--fio);
+  padding: 0.3rem 0.2rem;
+  margin-top: 0.6rem;
+}
+
+.capa__manchete {
+  font-family: var(--fonte-manchete);
+  font-weight: 900;
+  font-size: clamp(1.6rem, 5.4vw, 3.3rem);
+  line-height: 1.02;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: -0.01em;
+  margin-top: 0.8rem;
+}
+
+/* Linha fina da manchete */
+.capa__sub {
+  font-family: var(--fonte-texto);
+  font-style: italic;
+  font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+  line-height: 1.4;
+  text-align: center;
+  max-width: 600px;
+  margin: 0.4rem auto 0.8rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--fio);
+}
+
+/* Corpo da capa: matéria principal + coluna lateral separadas por fio */
+.capa__corpo {
+  display: grid;
+  grid-template-columns: 1fr 13rem;
+  gap: 1.2rem;
+}
+
+.capa__lateral {
+  border-left: 1px solid var(--fio);
+  padding-left: 1.2rem;
+}
+
+.capa__figura {
+  border: 1px solid var(--fio);
+  padding: 4px;
+  background: var(--papel-claro);
+  margin-bottom: 0.9rem;
+}
+
+.capa__foto {
+  height: min(38vh, 340px);
+  object-position: center 40%;
+}
+
+.capa__figura figcaption,
+.perfil__foto figcaption {
+  font-size: 0.78rem;
+  font-style: italic;
+  padding: 0.35rem 0.2rem 0.1rem;
+  color: var(--tinta-suave);
+}
+
+/* Texto corrido em colunas, com fio entre elas (como no jornal impresso) */
+.colunas-texto {
+  columns: 2;
+  column-gap: 1.4rem;
+  column-rule: 1px solid rgba(27, 25, 22, 0.35);
+}
+
+.colunas-texto .texto {
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+/* Notas curtas da coluna lateral */
+.nota + .nota {
+  border-top: 1px solid var(--fio);
+  padding-top: 0.8rem;
+  margin-top: 0.8rem;
+}
+
+.nota__titulo {
+  font-family: var(--fonte-manchete);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 0.4rem;
+}
+
+.nota--caixa {
+  border: 1px solid var(--fio);
+  outline: 1px solid var(--fio);
+  outline-offset: 3px;
+  padding: 0.7rem;
+  margin: 4px;
+  text-align: center;
+}
+
+.nota--caixa .texto {
+  text-align: center;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.nota__destaque {
+  font-family: var(--fonte-manchete);
+  font-weight: 900;
+  font-size: 1.5rem;
+  line-height: 1.1;
+}
+
+.nota__expediente {
+  font-size: 0.82rem;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* Índice "Nesta edição", com pontilhado até o número da página */
+.capa__indice {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.capa__indice a {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  font-size: 0.88rem;
+  color: var(--tinta);
+  text-decoration: none;
+}
+
+.capa__indice a::after {
+  content: "";
+  order: 1;
+  flex: 1;
+  border-bottom: 1px dotted var(--tinta-suave);
+}
+
+.capa__indice a b {
+  order: 2;
+  font-size: 0.8rem;
+}
+
+.capa__indice a:hover {
+  text-decoration: underline;
+}
+
+/* ================= PÁGINAS 2 E 3: PERFIS ================= */
+
+.perfil {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 1.6rem;
+  align-items: start;
+}
+
+.perfil--invertido .perfil__foto {
+  order: 2;
+}
+
+.perfil__foto {
+  border: 1px solid var(--fio);
+  padding: 4px;
+  background: var(--papel-claro);
+}
+
+.perfil__foto img {
+  height: min(48vh, 430px);
+  object-position: center 25%;
+}
+
+/* Fio vertical entre a foto e o texto do perfil */
+.perfil__texto {
+  border-left: 1px solid rgba(27, 25, 22, 0.35);
+  padding-left: 1.6rem;
+}
+
+.perfil--invertido .perfil__texto {
+  border-left: none;
+  padding-left: 0;
+  border-right: 1px solid rgba(27, 25, 22, 0.35);
+  padding-right: 1.6rem;
+}
+
+/* Ficha de "dados" do noivo/noiva */
+.ficha {
+  border: 1px solid var(--fio);
+  outline: 1px solid var(--fio);
+  outline-offset: 3px;
+  padding: 0.9rem 1rem;
+  margin-top: 1rem;
+  background: rgba(27, 25, 22, 0.05);
+}
+
+.ficha h3 {
+  font-family: var(--fonte-manchete);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--fio);
+  padding-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.ficha p {
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+/* ================= PASSATEMPO: CAÇA-PALAVRAS ================= */
+
+.passatempo {
+  border: 1px solid var(--fio);
+  outline: 1px solid var(--fio);
+  outline-offset: 3px;
+  padding: 1rem 1.2rem 1.2rem;
+  margin: 1.8rem 4px 0.5rem;
+}
+
+.passatempo__titulo {
+  font-family: var(--fonte-manchete);
+  font-weight: 900;
+  font-size: 1.05rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-align: center;
+  border-bottom: 3px double var(--fio);
+  padding-bottom: 0.4rem;
+}
+
+.passatempo__instrucao {
+  font-style: italic;
+  font-size: 0.88rem;
+  text-align: center;
+  color: var(--tinta-suave);
+  margin: 0.5rem 0 0.9rem;
+}
+
+.passatempo__corpo {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1.6rem;
+}
+
+/* O quadro de letras */
+.passatempo__quadro {
+  display: grid;
+  grid-template-columns: repeat(var(--n), 1fr);
+  width: min(100%, 26rem);
+  border: 2px solid var(--fio);
+  background: var(--papel-claro);
+  user-select: none;
+}
+
+.passatempo__letra {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--fonte-texto);
+  font-weight: 700;
+  font-size: clamp(0.8rem, 2.4vw, 1.05rem);
+  color: var(--tinta);
+  background: none;
+  border: none;
+  border-right: 1px solid rgba(27, 25, 22, 0.15);
+  border-bottom: 1px solid rgba(27, 25, 22, 0.15);
+  padding: 0;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.passatempo__letra:hover {
+  background: rgba(27, 25, 22, 0.08);
+}
+
+/* Primeira letra escolhida */
+.passatempo__letra--inicio {
+  background: var(--tinta) !important;
+  color: var(--papel-claro);
+}
+
+/* Letras de palavra encontrada: "riscadas" a lápis */
+.passatempo__letra--achada {
+  background: rgba(27, 25, 22, 0.22);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.passatempo__letra--errou {
+  animation: tremer 0.35s;
+}
+
+@keyframes tremer {
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+
+/* Lista de palavras ao lado */
+.passatempo__lado {
+  min-width: 9rem;
+}
+
+.passatempo__lista-titulo {
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--fio);
+  padding-bottom: 0.2rem;
+  margin-bottom: 0.4rem;
+}
+
+.passatempo__lista {
+  list-style: none;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.passatempo__item--achado {
+  text-decoration: line-through;
+  color: var(--tinta-suave);
+}
+
+.passatempo__item--achado::after {
+  content: " ✓";
+}
+
+.passatempo__placar {
+  font-style: italic;
+  font-size: 0.85rem;
+  margin: 0.6rem 0;
+}
+
+.passatempo--completo .passatempo__placar {
+  font-style: normal;
+  font-weight: 700;
+}
+
+.passatempo__recomecar {
+  font-family: var(--fonte-texto);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tinta);
+  background: none;
+  border: 1px solid var(--fio);
+  padding: 0.25rem 0.6rem;
+  cursor: pointer;
+}
+
+/* ================= PÁGINA 4: A NOSSA HISTÓRIA ================= */
+
+.colunas-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+}
+
+.colunas-3 > * + * {
+  border-left: 1px solid rgba(27, 25, 22, 0.35);
+  padding-left: 1.4rem;
+}
+
+/* ================= PÁGINA 5: CLASSIFICADOS ================= */
+
+.manchete--classificados {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border-bottom: 4px solid var(--fio);
+  padding-bottom: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+/* Matéria curta que abre o caderno */
+.classificados__materia {
+  max-width: 640px;
+  margin: 0 auto 1.2rem;
+  text-align: center;
+}
+
+.classificados__titulo {
+  font-family: var(--fonte-manchete);
+  font-weight: 900;
+  font-size: clamp(1.25rem, 3vw, 1.7rem);
+  line-height: 1.15;
+  margin: 0.2rem 0 0.6rem;
+}
+
+.classificados__como {
+  font-size: 0.88rem;
+  font-style: italic;
+  border: 1px dashed var(--fio);
+  padding: 0.5rem 0.8rem;
+}
+
+/* Faixa "Anúncios desta edição" + botão dos negócios fechados */
+.classificados__barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 3px double var(--fio);
+  border-bottom: 3px double var(--fio);
+  padding: 0.35rem 0;
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Cada seção: título em faixa preta + anúncios em colunas com fio entre elas */
+.classificados__secao + .classificados__secao {
+  margin-top: 1.2rem;
+}
+
+.classificados__secao-titulo {
+  background: var(--tinta);
+  color: var(--papel-claro);
+  font-family: var(--fonte-manchete);
+  font-weight: 900;
+  font-size: 0.95rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0.25rem;
+  margin-bottom: 0.7rem;
+}
+
+.classificados__anuncios {
+  columns: 3;
+  column-gap: 1.2rem;
+  column-rule: 1px solid rgba(27, 25, 22, 0.35);
+}
+
+.anuncio {
+  break-inside: avoid;
+  padding-bottom: 0.7rem;
+  margin-bottom: 0.7rem;
+  border-bottom: 1px dotted var(--tinta-suave);
+}
+
+.anuncio__texto {
+  font-size: 0.9rem;
+  line-height: 1.45;
+  hyphens: auto;
+}
+
+/* O começo do anúncio em negrito e caixa alta, como nos classificados de verdade */
+.anuncio__texto b {
+  font-family: var(--fonte-manchete);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.anuncio__preco {
+  font-family: var(--fonte-manchete);
+  font-weight: 900;
+  font-size: 1.1rem;
+  margin-top: 0.25rem;
+}
+
+.anuncio__preco small {
+  font-family: var(--fonte-texto);
+  font-weight: 400;
+  font-style: italic;
+  font-size: 0.75rem;
+}
+
+.anuncio__botao {
+  font-family: var(--fonte-texto);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tinta);
+  background: none;
+  border: 1px solid var(--fio);
+  padding: 0.3rem 0.6rem;
+  margin-top: 0.35rem;
+  cursor: pointer;
+}
+
+.anuncio__botao:hover {
+  background: var(--tinta);
+  color: var(--papel-claro);
+}
+
+/* Anúncio de valor livre: emoldurado para chamar atenção */
+.anuncio--livre {
+  border: 2px solid var(--fio);
+  padding: 0.6rem;
+}
+
+.anuncio__livre {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: var(--fonte-manchete);
+  font-weight: 900;
+  margin-top: 0.4rem;
+}
+
+.anuncio__livre input {
+  width: 6rem;
+  font: inherit;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--fio);
+  padding: 0.1rem 0.2rem;
+}
+
+/* ================= CELULAR ================= */
+
+@media (max-width: 600px) {
+  html body.pg-presentes {
+    gap: 0.5rem;
+  }
+
+  .jornal {
+    width: calc(100vw - 0.8rem);
+    height: calc(100svh - 4.4rem);
+  }
+
+  .pagina {
+    padding: 1.1rem 1rem 1.6rem;
+  }
+
+  .pagina__topo {
+    font-size: 0.52rem;
+    letter-spacing: 0.06em;
+    gap: 0.4rem;
+  }
+
+  .pagina__topo span:nth-child(2) {
+    font-size: 1.1rem;
+  }
+
+  /* Capa: nome em cima, as duas orelhas lado a lado embaixo */
+  .cabecalho {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .cabecalho__centro {
+    grid-column: 1 / -1;
+    order: -1;
+  }
+
+  .capa__nome {
+    font-size: clamp(2rem, 11vw, 3rem);
+  }
+
+  .capa__data {
+    font-size: 0.56rem;
+    letter-spacing: 0.06em;
+  }
+
+  .capa__corpo {
+    grid-template-columns: 1fr;
+    grid-template-areas: "foto" "texto" "lateral";
+  }
+
+  .capa__lateral {
+    border-left: none;
+    padding-left: 0;
+    border-top: 3px double var(--fio);
+    padding-top: 0.9rem;
+  }
+
+  .capa__foto {
+    height: 260px;
+  }
+
+  .colunas-texto {
+    columns: 1;
+  }
+
+  /* Caça-palavras no celular: lista embaixo do quadro */
+  .passatempo {
+    padding: 0.8rem 0.6rem 1rem;
+  }
+
+  .passatempo__titulo {
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+  }
+
+  .passatempo__corpo {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.9rem;
+  }
+
+  .passatempo__quadro {
+    width: 100%;
+  }
+
+  .passatempo__lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1rem;
+  }
+
+  .perfil,
+  .colunas-3 {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .perfil__texto,
+  .perfil--invertido .perfil__texto {
+    border: none;
+    padding: 0;
+  }
+  .perfil--invertido .perfil__foto {
+    order: 0;
+  }
+
+  .perfil__foto img {
+    height: 300px;
+  }
+
+  .colunas-3 > * + * {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid rgba(27, 25, 22, 0.35);
+    padding-top: 0.9rem;
+  }
+
+  .capa__indice a {
+    font-size: 0.85rem;
+  }
+
+  .classificados__anuncios {
+    columns: 1;
+  }
+
+  .classificados__barra {
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+  }
+
+  .folhear {
+    gap: 0.4rem;
+  }
+
+  .folhear__seta {
+    width: 2.3rem;
+    height: 2.3rem;
+    font-size: 1.5rem;
+  }
+
+  .folhear__item {
+    font-size: 0.66rem;
+    padding: 0.3rem 0.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .folhear__item .longo {
+    display: none;
+  }
+
+  .folhear__item .curto {
+    display: inline;
+  }
+}
+
+/* ================= ARRUMAÇÃO GERAL (celular e tablet rolam a página) ================= */
+
+.perfil > .passatempo {
+  grid-column: 1 / -1;
+}
+
+.capa__corpo {
+  grid-template-areas:
+    "foto  lateral"
+    "texto lateral";
+}
+
+.capa__figura { grid-area: foto; }
+.capa__texto  { grid-area: texto; }
+.capa__lateral { grid-area: lateral; }
+
+.historia__foto .foto--grande {
+  margin-bottom: 1rem;
+}
+
+.historia__texto section + section {
+  border-top: 1px solid rgba(27, 25, 22, 0.35);
+  padding-top: 0.8rem;
+  margin-top: 0.8rem;
+}
+
+/* Anúncio: texto em cima; preço e botão lado a lado embaixo */
+.anuncio {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: 0.6rem;
+}
+
+.anuncio__texto,
+.anuncio__livre {
+  grid-column: 1 / -1;
+}
+
+.anuncio__botao {
+  margin-top: 0.25rem;
+}
+
+.classificados__materia .topo__carrinho {
+  margin: 0.9rem auto 0;
+}
+
+/* ================= COMPUTADOR: JORNAL GRANDE, TUDO NA TELA SEM ROLAR ================= */
+
+@media (min-width: 901px) {
+  html body.pg-presentes {
+    gap: 0.6rem;
+  }
+
+  .jornal {
+    width: min(1500px, calc(100vw - 2rem));
+    height: calc(100svh - 4.4rem);
+  }
+
+  /* A página vira uma coluna: cabeçalho em cima e o corpo ocupa o que sobra */
+  .pagina {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 1rem 1.8rem 1.1rem;
+  }
+
+  .pagina > * {
+    flex-shrink: 0;
+  }
+
+  .perfil,
+  .historia,
+  .capa__corpo,
+  .classificados__layout {
+    flex: 1 1 0;
+    min-height: 0;
+  }
+
+  .pagina__topo {
+    margin-bottom: 0.6rem;
+  }
+
+  .chapeu {
+    font-size: 0.7rem;
+  }
+
+  .manchete {
+    font-size: clamp(2rem, 6.5vh, 3.6rem);
+    margin: 0.1rem 0 0.3rem;
+  }
+
+  .linha-fina {
+    font-size: 1rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.9rem;
+  }
+
+  /* Colunas que não cabem mostram uma rolagem só nelas (último recurso) */
+  .perfil__texto,
+  .capa__texto,
+  .historia__texto,
+  .classificados,
+  .classificados__materia {
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+
+  /* ---------- Capa: texto | foto | notas ---------- */
+  .cabecalho {
+    padding-top: 0.4rem;
+  }
+
+  .capa__nome {
+    font-size: clamp(2.4rem, 8.5vh, 5rem);
+  }
+
+  .capa__data {
+    margin-top: 0.4rem;
+  }
+
+  .capa__manchete {
+    font-size: clamp(1.6rem, 6vh, 3.4rem);
+    margin-top: 0.5rem;
+  }
+
+  .capa__sub {
+    margin: 0.2rem auto 0.7rem;
+    padding-bottom: 0.6rem;
+  }
+
+  .capa__corpo {
+    grid-template-columns: 1.1fr 1.6fr 15rem;
+    grid-template-rows: 100%;
+    grid-template-areas: "texto foto lateral";
+    gap: 1.4rem;
+  }
+
+  .capa__texto {
+    border-right: 1px solid rgba(27, 25, 22, 0.35);
+    padding-right: 1.4rem;
+  }
+
+  .capa__texto .texto {
+    font-size: clamp(0.8rem, 1.7vh, 1rem);
+    line-height: 1.5;
+  }
+
+  .capa__figura {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    margin: 0;
+  }
+
+  .capa__foto {
+    flex: 1;
+    height: auto;
+    min-height: 0;
+  }
+
+  .capa__lateral {
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+
+  /* ---------- Perfis: foto | texto | caça-palavras ---------- */
+  .perfil {
+    grid-template-columns: 1fr 1.1fr 1.15fr;
+    grid-template-rows: 100%;
+    gap: 1.6rem;
+    align-items: stretch;
+  }
+
+  .perfil > .passatempo {
+    grid-column: auto;
+  }
+
+  .perfil--invertido .passatempo {
+    order: -1;
+  }
+
+  .perfil__foto {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .perfil__foto img {
+    flex: 1;
+    height: auto;
+    min-height: 0;
+  }
+
+  /* ---------- Página 4: foto | história | caça-palavras ---------- */
+  .historia {
+    display: grid;
+    grid-template-columns: 1.25fr 1fr 1.15fr;
+    grid-template-rows: 100%;
+    gap: 1.6rem;
+  }
+
+  .historia__foto {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .historia__foto .citacao {
+    margin-top: 0;
+  }
+
+  .historia__foto .foto--grande {
+    flex: 1;
+    height: auto;
+    min-height: 0;
+    margin: 0;
+  }
+
+  .historia__texto {
+    border-left: 1px solid rgba(27, 25, 22, 0.35);
+    padding-left: 1.4rem;
+  }
+
+  /* ---------- Textos longos: letra acompanha a altura da tela para caber ---------- */
+  .perfil {
+    grid-template-columns: 0.9fr 1.3fr 1fr;
+  }
+
+  .perfil__texto .texto {
+    font-size: clamp(0.8rem, 1.6vh, 1rem);
+    line-height: 1.5;
+  }
+
+  .perfil__texto .ficha {
+    padding: 0.6rem 0.9rem;
+  }
+
+  .perfil__texto .ficha p {
+    font-size: clamp(0.78rem, 1.5vh, 0.95rem);
+    line-height: 1.45;
+  }
+
+  /* A história do casal corre em duas colunas, como matéria de jornal */
+  .historia {
+    grid-template-columns: 0.75fr 1.6fr;
+  }
+
+  .historia__texto {
+    columns: 2;
+    column-gap: 1.4rem;
+    column-rule: 1px solid rgba(27, 25, 22, 0.35);
+  }
+
+  .historia__texto .titulo {
+    font-size: clamp(1rem, 2.2vh, 1.3rem);
+    break-after: avoid;
+  }
+
+  .historia__texto .texto {
+    font-size: clamp(0.85rem, 1.9vh, 1.1rem);
+    line-height: 1.55;
+  }
+
+  .historia__texto section + section {
+    padding-top: 0.6rem;
+    margin-top: 0.6rem;
+  }
+
+  /* ---------- Caça-palavras: o quadro cresce até caber na coluna ---------- */
+  .passatempo {
+    container-type: size;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    margin: 4px;
+    padding: 0.7rem 0.9rem;
+  }
+
+  .passatempo__instrucao {
+    font-size: 0.8rem;
+    margin: 0.4rem 0 0.6rem;
+  }
+
+  .passatempo__corpo {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .passatempo__quadro {
+    --lado: min(100cqw - 1.8rem, 100cqh - 13rem);
+    width: var(--lado);
+  }
+
+  .passatempo__letra {
+    font-size: min(1.1rem, calc(var(--lado) / 11 * 0.5));
+  }
+
+  .passatempo__lado {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.3rem 0.8rem;
+  }
+
+  .passatempo__lista-titulo {
+    display: none;
+  }
+
+  .passatempo__lista {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 0.9rem;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    border-top: 1px solid var(--fio);
+    padding-top: 0.3rem;
+  }
+
+  .passatempo__placar {
+    margin: 0;
+    flex: 1;
+    text-align: right;
+  }
+
+  /* ---------- Classificados: matéria | anúncios em 3 colunas ---------- */
+  .manchete--classificados {
+    margin-bottom: 0.7rem;
+  }
+
+  .classificados__layout {
+    display: grid;
+    grid-template-columns: 17rem 1fr;
+    grid-template-rows: 100%;
+    gap: 1.4rem;
+  }
+
+  .classificados__materia {
+    margin: 0;
+    text-align: left;
+    border-right: 1px solid rgba(27, 25, 22, 0.35);
+    padding-right: 1.4rem;
+  }
+
+  .classificados__materia .chapeu {
+    text-align: left;
+  }
+
+  .classificados__materia .texto {
+    font-size: 0.92rem;
+    text-align: left;
+  }
+
+  .classificados__materia .topo__carrinho {
+    margin: 0.9rem 0 0;
+  }
+
+  .classificados {
+    columns: 3;
+    column-gap: 1.2rem;
+    column-rule: 1px solid rgba(27, 25, 22, 0.35);
+  }
+
+  .classificados__anuncios {
+    columns: auto;
+  }
+
+  .classificados__secao + .classificados__secao {
+    margin-top: 0.4rem;
+  }
+
+  .classificados__secao-titulo {
+    break-after: avoid;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .classificados__titulo {
+    font-size: clamp(1.2rem, 3.4vh, 1.7rem);
+  }
+
+  .passatempo__titulo {
+    font-size: 0.95rem;
+    letter-spacing: 0.14em;
+  }
+}
+
+/* Celular: capa em uma coluna só (foto, texto, notas) */
+@media (max-width: 600px) {
+  .capa__corpo {
+    grid-template-columns: 1fr;
+    grid-template-areas: "foto" "texto" "lateral";
+  }
+}
+
+/* Notebook com tela mais baixa: anúncios em 4 colunas e manchetes menores */
+@media (min-width: 1200px) and (max-height: 820px) {
+  .classificados {
+    columns: 4;
+    column-gap: 1rem;
+  }
+
+  .manchete {
+    font-size: clamp(1.8rem, 5.6vh, 3rem);
+  }
+
+  .classificados__materia .texto {
+    font-size: 0.86rem;
+    line-height: 1.5;
+  }
+}
+
+/* ================= CLASSIFICADOS À MODA ANTIGA =================
+   Fonte IM Fell: cópia das letras de chumbo usadas nas tipografias antigas */
+
+.pagina--presentes {
+  --fonte-epoca: "IM Fell English", "Old Standard TT", Georgia, serif;
+  --fonte-epoca-versalete: "IM Fell English SC", "Old Standard TT", Georgia, serif;
+  --fonte-epoca-titulo: "IM Fell Double Pica", "Old Standard TT", Georgia, serif;
+}
+
+.anuncio__texto {
+  font-family: var(--fonte-epoca);
+  font-size: 1.05rem;
+  line-height: 1.32;
+  text-align: left;
+  hyphens: auto;
+}
+
+/* Começo do anúncio em versalete (maiúsculas de época) */
+.anuncio__texto b {
+  font-family: var(--fonte-epoca-versalete);
+  font-weight: 400;
+  font-size: 1.12em;
+  text-transform: none;
+  letter-spacing: 0.03em;
+}
+
+.anuncio__preco {
+  font-family: var(--fonte-epoca-titulo);
+  font-weight: 400;
+  font-size: 1.25rem;
+}
+
+.anuncio__preco small {
+  font-family: var(--fonte-epoca);
+}
+
+.anuncio__botao {
+  font-family: var(--fonte-epoca-versalete);
+  font-weight: 400;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: none;
+}
+
+/* Títulos das seções: faixa preta com letra de cartaz antigo */
+.classificados__secao-titulo {
+  font-family: var(--fonte-epoca-titulo);
+  font-weight: 400;
+  font-size: 1.15rem;
+  letter-spacing: 0.12em;
+}
+
+.classificados__titulo {
+  font-family: var(--fonte-epoca-titulo);
+  font-weight: 400;
+}
+
+.classificados__materia .texto,
+.classificados__como {
+  font-family: var(--fonte-epoca);
+}
+
+.anuncio__livre {
+  font-family: var(--fonte-epoca-titulo);
+  font-weight: 400;
+  font-size: 1.15rem;
+}
+
+/* No computador o tamanho acompanha a altura da tela, para caber sem rolar */
+@media (min-width: 901px) {
+  .anuncio {
+    padding-bottom: 0.45vh;
+    margin-bottom: 0.6vh;
+  }
+
+  .anuncio__texto {
+    font-size: clamp(0.92rem, 1.5vh + 0.2rem, 1.3rem);
+    line-height: 1.25;
+  }
+
+  .pagina--presentes .classificados__como {
+    font-size: clamp(0.95rem, 1.3vh + 0.2rem, 1.15rem);
+    line-height: 1.3;
+  }
+
+  .anuncio__preco {
+    font-size: clamp(1rem, 1.7vh + 0.2rem, 1.4rem);
+    margin-top: 0.1rem;
+  }
+
+  .anuncio__botao {
+    font-size: clamp(0.72rem, 1vh + 0.15rem, 0.95rem);
+    padding: 0.15rem 0.5rem;
+    margin-top: 0.1rem;
+  }
+
+  .classificados__secao-titulo {
+    break-after: avoid;
+    font-size: clamp(0.95rem, 1.5vh + 0.2rem, 1.3rem);
+    padding: 0.15rem;
+    margin-bottom: 0.6vh;
+  }
+
+  .classificados__secao + .classificados__secao {
+    margin-top: 0.6vh;
+  }
+
+  .anuncio--livre {
+    padding: 0.4rem;
+  }
+
+  .classificados__titulo {
+    font-size: clamp(1.3rem, 3.6vh, 2rem);
+  }
+
+  .classificados__materia .texto {
+    font-size: clamp(0.92rem, 1.4vh + 0.2rem, 1.2rem);
+    line-height: 1.4;
+  }
+
+  .classificados__layout {
+    grid-template-columns: 16rem 1fr;
+  }
+}
+
+/* ================= MARCA D'ÁGUA: LOGO DO CASAL ================= */
+
+.marca-dagua {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  user-select: none;
+  color: var(--tinta);
+  opacity: 0.09;
+  mix-blend-mode: multiply;
+  font-family: var(--fonte-cursiva);
+  line-height: 1;
+  /* No celular fica no fim da página, depois de todo o conteúdo */
+  margin: 1.6rem auto 0;
+}
+
+.marca-dagua__letras {
+  display: flex;
+  align-items: center;
+  gap: 0.05em;
+  font-size: 6rem;
+}
+
+.marca-dagua__letras svg {
+  width: 0.32em;
+  height: 0.32em;
+  fill: currentColor;
+}
+
+.marca-dagua__data {
+  font-size: 1.8rem;
+  letter-spacing: 0.05em;
+  margin-top: -0.15em;
+}
+
+/* No computador fica "carimbada" embaixo, no meio da página */
+@media (min-width: 901px) {
+  .marca-dagua {
+    position: absolute;
+    left: 50%;
+    bottom: 1.2rem;
+    transform: translateX(-50%);
+    margin: 0;
+    z-index: 2;
+  }
+
+  .marca-dagua__letras {
+    font-size: clamp(5rem, 15vh, 9rem);
+  }
+
+  .marca-dagua__data {
+    font-size: clamp(1.4rem, 3.6vh, 2.4rem);
+  }
+
+  /* Na capa, fica embaixo do texto da coluna da esquerda (fora da foto) */
+  .pagina--capa .marca-dagua {
+    left: 16.5%;
+  }
+}
+
+/* ================= CELULAR E TABLET: fotos inteiras, sem corte ================= */
+@media (max-width: 900px) {
+  .historia__foto .foto--grande,
+  .perfil__foto img.foto--inteira {
+    height: auto;
+    max-height: 75svh;
+    width: auto;
+    max-width: 100%;
+    margin-inline: auto;
+    object-fit: contain;
+  }
+
+  .perfil__foto:has(.foto--inteira) {
+    width: fit-content;
+    max-width: 100%;
+    margin-inline: auto;
+  }
+}
+
+/* Para quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  .pagina,
+  .pagina--virada {
+    transition: none;
+  }
+}

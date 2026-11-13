@@ -1,0 +1,12 @@
+# Só vão para o GitHub as fotos que aparecem no site;
+# as outras ficam apenas no computador.
+imagens/*
+!imagens/estrela.svg
+!imagens/capa-mirante.jpg
+!imagens/mariana.jpg
+!imagens/alexandre-museu.jpg
+!imagens/historia-pedido.jpg
+!imagens/anel.jpg
+
+# Página de teste do celular (temporária)
+teste-cel.html

@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Correio do Amor · Alexandre &amp; Mariana · 20/03/2027</title>
+  <link rel="icon" href="imagens/estrela.svg" type="image/svg+xml">
+
+  <!-- Fontes de jornal antigo: gótica (nome do jornal), clássica (textos), manchete e cursiva (assinaturas) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Pinyon+Script&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=IM+Fell+Double+Pica&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="estilo.css?v=202611122233">
+  <link rel="stylesheet" href="presentes.css?v=202611122233">
+</head>
+<body class="pg-presentes">
+
+  <!-- ================= O JORNAL (uma página por vez, vira como folha) =================
+       Textos entre parênteses (classe "a-definir") são PROVISÓRIOS: o casal escreve. -->
+  <main class="jornal" id="jornal" aria-label="Jornal Correio do Amor">
+
+    <!-- ===== PÁGINA 1: CAPA ===== -->
+    <article class="pagina pagina--capa" id="pagina-1" aria-label="Capa">
+
+      <!-- Cabeçalho: caixinhas nos cantos ("orelhas") e o nome do jornal no meio -->
+      <header class="cabecalho">
+        <div class="orelha">
+          <b>Previsão do tempo</b>
+          Céu limpo, com 100% de chance de amor.
+        </div>
+        <div class="cabecalho__centro">
+          <h1 class="capa__nome">Correio do Amor</h1>
+          <p class="cabecalho__lema">“Folha dedicada às boas notícias do coração”</p>
+        </div>
+        <div class="orelha">
+          <b>Preço</b>
+          Um abraço apertado nos noivos.
+        </div>
+      </header>
+
+      <p class="capa__data">
+        <span>Ano I · Nº 1</span>
+        <span>Sábado, 20 de março de 2027</span>
+        <span>Edição Extra</span>
+      </p>
+
+      <h2 class="capa__manchete">Alexandre &amp; Mariana vão se casar!</h2>
+      <p class="capa__sub">Juntos há quatro anos, o casal confirma a união para março de 2027 e convida familiares e amigos para a celebração</p>
+
+      <div class="capa__corpo">
+        <!-- Matéria principal: foto + texto -->
+        <figure class="capa__figura">
+          <img class="capa__foto" src="imagens/capa-mirante.jpg" alt="Alexandre e Mariana se beijando abraçados no mirante, com o mar ao fundo">
+          <figcaption>Flagrante: os noivos no mirante, registrados pela reportagem do Correio do Amor.</figcaption>
+        </figure>
+
+        <div class="capa__texto">
+            <p class="texto texto--capitular">É oficial: Alexandre e Mariana vão subir ao altar no dia 20 de março de 2027. A notícia, que já corria de boca em boca entre parentes e amigos, foi confirmada pelo próprio casal a esta redação.</p>
+            <p class="texto">Tudo começou há quatro anos, num fim de ano colorido pela primavera, quando os dois esperavam, sentados, por uma simples cerveja. Veio o primeiro beijo e, segundo testemunhas, foi amor à primeira vista.</p>
+            <p class="texto">De lá para cá, a dentista e professora nascida em Araguaína e o porto-alegrense que vive de eternizar momentos pelas lentes somaram viagens, mudanças e três gatos, que hoje dividem com eles o calor da casa.</p>
+            <p class="texto">Nesta edição extra, o leitor confere o perfil dos noivos, a história do casal e, nos classificados, a lista de presentes. A redação deseja aos dois uma vida inteira de viagens, cafunés e boas notícias para contar.</p>
+        </div>
+
+        <!-- Coluna lateral: notas curtas -->
+        <aside class="capa__lateral">
+          <section class="nota nota--caixa">
+            <h3 class="nota__titulo">Data marcada</h3>
+            <p class="nota__destaque">20 · 03 · 2027</p>
+            <p class="texto">Sábado. <span class="a-definir">(Local e horário.)</span></p>
+          </section>
+
+          <section class="nota">
+            <h3 class="nota__titulo">Nesta edição</h3>
+            <!-- Índice (também serve para pular direto para a página) -->
+            <nav class="capa__indice" aria-label="Nesta edição">
+              <a href="#pagina-2" data-pagina="2">A história dela <b>2</b></a>
+              <a href="#pagina-3" data-pagina="3">A história dele <b>3</b></a>
+              <a href="#pagina-4" data-pagina="4">A nossa história <b>4</b></a>
+              <a href="#pagina-5" data-pagina="5">Classificados: presentes <b>5</b></a>
+            </nav>
+          </section>
+
+          <section class="nota">
+            <h3 class="nota__titulo">Expediente</h3>
+            <p class="nota__expediente"><b>Redação:</b> Alexandre &amp; Mariana<br><b>Tiragem:</b> edição única<br><b>Distribuição:</b> a quem ama os noivos</p>
+          </section>
+        </aside>
+      </div>
+    </article>
+
+    <!-- ===== PÁGINA 2: MARIANA ===== -->
+    <article class="pagina" id="pagina-2" aria-label="A história da Mariana">
+      <header class="pagina__topo">
+        <span>Pág. 2 · Perfil</span>
+        <span>Correio do Amor</span>
+        <span>20 de março de 2027</span>
+      </header>
+
+      <p class="chapeu">Perfil · A noiva</p>
+      <h2 class="manchete">Mariana</h2>
+      <p class="linha-fina">Do sol de Araguaína para a vida: a dentista e professora que nasceu para cuidar</p>
+
+      <div class="perfil">
+        <figure class="perfil__foto">
+          <img class="foto--inteira" src="imagens/mariana.jpg" alt="Mariana sozinha no mirante, de óculos escuros, com o mar e os coqueiros ao fundo">
+          <figcaption>Mariana no mirante, com o mar como testemunha.</figcaption>
+        </figure>
+
+        <div class="perfil__texto">
+          <p class="texto texto--capitular">Primeira filha de Sergio e Celeide Deluca, Mariana nasceu sob o sol forte de Araguaína, no Tocantins, carregando desde cedo as cores e a energia do Norte. Embora tenha morado em Palmas e Xambioá antes de se mudar ainda muito jovem para a capital gaúcha com a família, sua alma jamais soltou as raízes. Ela mantém firmes os laços com a família materna, cultivando com imenso amor as memórias de sua infância. Mariana nunca deixou de amar e celebrar o seu povo, os sabores marcantes da sua terra, a força de suas águas, suas chuvas e o seu sol.</p>
+          <p class="texto">A busca constante por conhecimento é uma virtude que a acompanha desde pequena. Hoje, como dentista e professora, ela une o dom de ensinar com a sua maior vocação: cuidar. Mariana dedica seus dias a compartilhar com as pessoas a importância do bem-estar, não apenas transformando sorrisos, mas acolhendo a alma de quem passa pelo seu caminho. É uma mulher determinada, de coragem inabalável, que luta diariamente por seus sonhos e constrói a própria trajetória amparando e protegendo as pessoas que ama.</p>
+
+          <aside class="ficha">
+            <h3>Ficha da noiva</h3>
+            <p><b>Nome:</b> Mariana Castello de Carvalho Deluca</p>
+            <p><b>Nascimento:</b> 9 de maio de 1994, em Araguaína (TO)</p>
+            <p><b>Profissão:</b> dentista e professora</p>
+            <p><b>Não vive sem:</b> <span class="a-definir">(a definir)</span></p>
+            <p><b>Comida favorita:</b> <span class="a-definir">(a definir)</span></p>
+          </aside>
+        </div>
+
+        <!-- Caça-palavras (palavras em caca-palavras-dados.js) -->
+        <section class="passatempo" data-caca="mariana"></section>
+      </div>
+    </article>
+
+    <!-- ===== PÁGINA 3: ALEXANDRE ===== -->
+    <article class="pagina" id="pagina-3" aria-label="A história do Alexandre">
+      <header class="pagina__topo">
+        <span>Pág. 3 · Perfil</span>
+        <span>Correio do Amor</span>
+        <span>20 de março de 2027</span>
+      </header>
+
+      <p class="chapeu">Perfil · O noivo</p>
+      <h2 class="manchete">Alexandre</h2>
+      <p class="linha-fina">O porto-alegrense de olhar treinado que passou a vida eternizando momentos</p>
+
+      <div class="perfil">
+        <figure class="perfil__foto">
+          <img class="foto--inteira" src="imagens/alexandre-museu.jpg" alt="Alexandre num museu, de touca e jaqueta escura, segurando uma câmera fotográfica em frente a um quadro de Van Gogh">
+          <figcaption>Alexandre, de câmera em punho, diante de um Van Gogh.</figcaption>
+        </figure>
+
+        <div class="perfil__texto">
+          <p class="texto texto--capitular">Natural de Porto Alegre, Alexandre construiu sua vida em torno da sensibilidade e da comunicação. Como alguém que tem o olhar treinado para capturar a essência do mundo através das lentes, do vídeo e da fotografia, ele passou a vida registrando histórias e eternizando momentos. Porém, a cena mais bonita e o roteiro mais importante que ele já ajudou a escrever não estavam em um projeto de trabalho, mas no encontro que mudaria o seu destino.</p>
+
+          <aside class="ficha">
+            <h3>Ficha do noivo</h3>
+            <p><b>Nome:</b> Alexandre da Rosa Garcia</p>
+            <p><b>Nascimento:</b> 4 de fevereiro de 1992, em Porto Alegre (RS)</p>
+            <p><b>Profissão:</b> comunicação, vídeo e fotografia</p>
+            <p><b>Não vive sem:</b> <span class="a-definir">(a definir)</span></p>
+            <p><b>Time do coração:</b> <span class="a-definir">(a definir)</span></p>
+          </aside>
+        </div>
+
+        <!-- Caça-palavras (palavras em caca-palavras-dados.js) -->
+        <section class="passatempo" data-caca="alexandre"></section>
+      </div>
+    </article>
+
+    <!-- ===== PÁGINA 4: A NOSSA HISTÓRIA ===== -->
+    <article class="pagina" id="pagina-4" aria-label="A nossa história">
+      <header class="pagina__topo">
+        <span>Pág. 4 · Especial</span>
+        <span>Correio do Amor</span>
+        <span>20 de março de 2027</span>
+      </header>
+
+      <p class="chapeu">Especial · O casal</p>
+      <h2 class="manchete">A nossa história</h2>
+
+      <!-- 2 colunas: foto + citação | a história (em duas colunas de texto) -->
+      <div class="historia">
+        <div class="historia__foto">
+          <blockquote class="citacao">
+            “E até quem me vê lendo o jornal na fila do pão sabe que eu te encontrei”
+          </blockquote>
+          <img class="foto foto--grande" src="imagens/historia-pedido.jpg" alt="Alexandre ajoelhado pedindo Mariana em casamento em frente a uma igrejinha branca">
+        </div>
+
+        <div class="historia__texto">
+          <section>
+            <h3 class="titulo">Como nos conhecemos</h3>
+            <p class="texto">Há quatro anos, a vida orquestrou nosso primeiro beijo. Sentados, na simples espera de uma cerveja, fomos arrebatados pela certeza instantânea de um amor à primeira vista. Era final de ano, e o calor das calçadas, embalado pelas cores da primavera que tomavam a cidade, serviu de cenário para o início de tudo.</p>
+          </section>
+          <section>
+            <h3 class="titulo">O casal e a família</h3>
+            <p class="texto">Desde então, nossa história tem sido escrita de bloco em bloco, de viagem em viagem. Foram as inúmeras mudanças que a vida trouxe que moldaram nossos dias com um companheirismo profundo e uma dedicação mútua inabalável. Hoje, o calor do nosso lar é dividido com a nossa amada família felina: nossos três gatos, que enchem a casa de vida, graça e afeto.</p>
+            <p class="texto">O nosso amor é o fruto maduro do cuidado diário e da confiança absoluta. Com o coração sedento pelo mundo e a alma de viajantes já sonhando com nossos próximos roteiros românticos pela Europa e tantas outras fronteiras, o maior desejo que compartilhamos é o de vivermos juntos por muitos e muitos anos. Queremos envelhecer lado a lado, cuidando um do outro com a mesma ternura do primeiro encontro.</p>
+            <p class="texto"><i>O passado, o presente e o futuro estão, para sempre, unidos na consagração deste grande amor.</i></p>
+          </section>
+          <section>
+            <h3 class="titulo">O pedido</h3>
+            <p class="texto a-definir">(Onde, como e quem chorou mais.)</p>
+          </section>
+          <section>
+            <h3 class="titulo">O grande dia</h3>
+            <p class="texto"><b>Sábado, 20 de março de 2027.</b> <span class="a-definir">(Local e horário.)</span></p>
+          </section>
+          <p class="assinatura">Alexandre &amp; Mariana</p>
+          <figure class="historia__anel">
+            <img class="foto" src="imagens/anel.jpg" alt="Mariana mostrando o anel de noivado no dedo, abraçada ao Alexandre, em frente à igrejinha">
+            <figcaption>Prova do crime: o anel, enfim, no dedo.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </article>
+
+    <!-- ===== PÁGINA 5: CLASSIFICADOS (lista de presentes) ===== -->
+    <article class="pagina pagina--presentes" id="pagina-5" aria-label="Classificados: lista de presentes">
+      <header class="pagina__topo">
+        <span>Pág. 5 · Classificados</span>
+        <span>Correio do Amor</span>
+        <span>20 de março de 2027</span>
+      </header>
+
+      <h2 class="manchete manchete--classificados">Classificados</h2>
+
+      <div class="classificados__layout">
+      <!-- Matéria curta que abre o caderno -->
+      <div class="classificados__materia">
+        <p class="chapeu">Economia do coração</p>
+        <h3 class="classificados__titulo">Noivos abrem balcão de negócios e mercado do amor fica aquecido</h3>
+        <p class="texto">Em movimento inédito, Alexandre e Mariana publicam nesta edição seus próprios anúncios classificados. Todo o valor arrecadado vai direto para o casal começar a vida a dois. Questionada pela reportagem, a vizinhança comemorou: a grama, enfim, será cortada.</p>
+        <p class="classificados__como"><b>Como fechar negócio:</b> escolha um anúncio, clique em “Fechar negócio” e pague via PIX. Sua presença, claro, continua sendo o maior presente.</p>
+
+        <button class="topo__carrinho" id="abrir-carrinho" type="button">
+          Negócios fechados
+          <span class="topo__contador" id="contador">0</span>
+        </button>
+      </div>
+
+      <!-- Os anúncios são montados pelo presentes.js a partir de presentes-dados.js -->
+      <div class="classificados" id="grade"></div>
+      </div>
+    </article>
+  </main>
+
+  <!-- ================= Controles para folhear ================= -->
+  <nav class="folhear" aria-label="Folhear o jornal">
+    <button class="folhear__seta" id="anterior" type="button" aria-label="Página anterior">‹</button>
+    <div class="folhear__indice" id="indice"></div>
+    <button class="folhear__seta" id="proxima" type="button" aria-label="Próxima página">›</button>
+  </nav>
+
+  <!-- ================= Carrinho e pagamento (ficam por cima do jornal) ================= -->
+  <div class="fundo-escuro" id="fundo-escuro" hidden></div>
+
+  <aside class="carrinho" id="carrinho" aria-hidden="true" aria-label="Carrinho de presentes">
+    <div class="carrinho__topo">
+      <h2>Negócios fechados</h2>
+      <button class="fechar" id="fechar-carrinho" type="button" aria-label="Fechar">×</button>
+    </div>
+
+    <ul class="carrinho__itens" id="itens"></ul>
+    <p class="carrinho__vazio" id="vazio">Nenhum anúncio escolhido ainda.</p>
+
+    <div class="carrinho__rodape" id="rodape">
+      <p class="carrinho__total">Total <strong id="total">R$ 0,00</strong></p>
+      <label>
+        Seu nome
+        <input type="text" id="nome-convidado" maxlength="60" placeholder="Como o casal te conhece">
+      </label>
+      <label>
+        Mensagem para o casal <small>(opcional)</small>
+        <textarea id="mensagem" rows="3" maxlength="300" placeholder="Deixe um carinho para Alexandre e Mariana"></textarea>
+      </label>
+      <button class="botao" id="ir-pagar" type="button">Ir para o pagamento</button>
+    </div>
+  </aside>
+
+  <div class="pagamento" id="pagamento" role="dialog" aria-modal="true" aria-labelledby="pagamento-titulo" hidden>
+    <div class="pagamento__caixa">
+      <button class="fechar" id="fechar-pagamento" type="button" aria-label="Fechar">×</button>
+      <h2 id="pagamento-titulo">Pagamento via PIX</h2>
+      <p class="pagamento__valor">Valor: <strong id="pagamento-valor"></strong></p>
+
+      <div id="pix-pronto" hidden>
+        <p>Abra o app do seu banco, escolha <strong>PIX → Ler QR Code</strong> e aponte para o código:</p>
+        <div class="pagamento__qr" id="qr"></div>
+        <p>Ou use o <strong>PIX copia e cola</strong>:</p>
+        <div class="pagamento__copia">
+          <input type="text" id="pix-codigo" readonly>
+          <button class="botao botao--pequeno" id="copiar" type="button">Copiar</button>
+        </div>
+        <a class="botao botao--claro" id="avisar" href="#" target="_blank" rel="noopener" hidden>Já paguei · Avisar o casal no WhatsApp</a>
+      </div>
+
+      <div id="pix-pendente" class="pagamento__pendente" hidden>
+        <p>✦ O pagamento ainda está sendo configurado pelo casal.</p>
+        <p>Volte em breve para concluir o seu presente. Obrigado pelo carinho!</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="aviso" id="aviso" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+  <script src="presentes-dados.js?v=202611122233"></script>
+  <script src="pix.js?v=202611122233"></script>
+  <script src="presentes.js?v=202611122233"></script>
+  <script src="caca-palavras-dados.js?v=202611122233"></script>
+  <script src="caca-palavras.js?v=202611122233"></script>
+  <script src="jornal.js?v=202611122233"></script>
+</body>
+</html>
