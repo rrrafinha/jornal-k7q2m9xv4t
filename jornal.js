@@ -15,7 +15,6 @@ const NOMES = [
   ["Alexandre", "Ele"],
   ["Nós dois", "Nós"],
   ["Presentes", "Presentes"],
-  ["Informações", "Info"],
 ];
 let atual = 0;
 
@@ -80,8 +79,20 @@ paginas.forEach((pagina, i) => {
   pagina.appendChild(rodape);
 });
 
-// Índice do rodapé (um botão para cada página)
+// A página de informações fica fora do folhear (abas, setas, teclado e dedo):
+// só se chega nela pelo botão "Informações" ou pelo índice da capa.
+const INDICE_INFO = PAGINA_INFO - 1;
+const ULTIMA_FOLHEAVEL = INDICE_INFO >= 0 ? INDICE_INFO - 1 : paginas.length - 1;
+
+function folhear(passo) {
+  const alvo = atual + passo;
+  if (alvo > ULTIMA_FOLHEAVEL) return;
+  irPara(alvo);
+}
+
+// Índice do rodapé (um botão para cada página, menos a de informações)
 const botoesIndice = paginas.map((_, i) => {
+  if (i === INDICE_INFO) return null;
   const [longo, curto] = NOMES[i] || [`Pág. ${i + 1}`, `${i + 1}`];
   const b = document.createElement("button");
   b.type = "button";
@@ -105,20 +116,21 @@ function irPara(n) {
   });
 
   botoesIndice.forEach((b, i) => {
+    if (!b) return;
     b.classList.toggle("folhear__item--ativo", i === n);
     b.setAttribute("aria-current", i === n ? "page" : "false");
   });
 
   botaoAnterior.disabled = n === 0;
-  botaoProxima.disabled = n === paginas.length - 1;
+  botaoProxima.disabled = n >= ULTIMA_FOLHEAVEL;
 
   paginas[n].scrollTop = 0;
   history.replaceState(null, "", `#pagina-${n + 1}`);
   atual = n;
 }
 
-botaoAnterior.addEventListener("click", () => irPara(atual - 1));
-botaoProxima.addEventListener("click", () => irPara(atual + 1));
+botaoAnterior.addEventListener("click", () => folhear(-1));
+botaoProxima.addEventListener("click", () => folhear(1));
 
 // Links do índice da capa
 jornal.querySelectorAll("[data-pagina]").forEach((link) => {
@@ -131,8 +143,8 @@ jornal.querySelectorAll("[data-pagina]").forEach((link) => {
 // Teclado: setas para os lados (menos quando a pessoa está digitando)
 document.addEventListener("keydown", (e) => {
   if (e.target.closest("input, textarea")) return;
-  if (e.key === "ArrowRight") irPara(atual + 1);
-  if (e.key === "ArrowLeft") irPara(atual - 1);
+  if (e.key === "ArrowRight") folhear(1);
+  if (e.key === "ArrowLeft") folhear(-1);
 });
 
 // Celular: arrastar o dedo para o lado vira a página
@@ -150,7 +162,7 @@ jornal.addEventListener("pointerup", (e) => {
   toqueInicio = null;
   // Só conta se foi claramente para o lado (e não rolando para baixo)
   if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) {
-    irPara(dx < 0 ? atual + 1 : atual - 1);
+    folhear(dx < 0 ? 1 : -1);
   }
 });
 
