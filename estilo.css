@@ -2002,6 +2002,45 @@ html body.pg-presentes {
   text-transform: uppercase;
 }
 
+/* Versão chamativa: faixa "FALTAM", números grandes em 2 x 2 e contorno dourado do logo */
+.contagem__titulo {
+  display: inline-block;
+  padding: 0.15rem 0.8rem;
+  background: var(--tinta);
+  color: var(--papel-claro);
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+}
+
+.contagem__numeros {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem 0.5rem;
+  margin-top: 0.55rem;
+}
+
+.contagem__casa {
+  min-width: 0;
+}
+
+.contagem__casa b {
+  font-size: 2rem;
+  padding: 0.2rem 0.3rem 0.1rem;
+  outline: 2px solid #d39a1c;
+  outline-offset: 2px;
+}
+
+.contagem__casa small {
+  font-size: 0.62rem;
+  font-weight: 700;
+  margin-top: 0.35rem;
+}
+
+.contagem__rodape {
+  font-size: 0.9rem;
+  margin-top: 0.45rem;
+}
+
 .contagem__fim {
   font-family: var(--fonte-manchete);
   font-weight: 900;
