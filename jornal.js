@@ -21,7 +21,7 @@ let atual = 0;
 
 // Notebook de tela baixa: monta o jornal numa tela "virtual" de ALTURA_MINIMA
 // e encolhe tudo junto (zoom), em vez de cortar fotos ou apertar o texto.
-const ALTURA_MINIMA = 760;
+const ALTURA_MINIMA = 820;
 
 function ajustarTamanho() {
   const raiz = document.documentElement;
@@ -59,7 +59,7 @@ const LOGO = `
   </span>
   <span class="marca-dagua__data">20.03.27</span>`;
 
-// Rodapé de cada página com o botão "Informações" (como o "continua na pág." dos jornais).
+// Rodapé de cada página com o botão "Informações", que leva à página de serviço.
 // A própria página de informações não leva o botão.
 const PAGINA_INFO = paginas.findIndex((p) => p.id === "pagina-6") + 1;
 
@@ -74,7 +74,6 @@ paginas.forEach((pagina, i) => {
   const rodape = document.createElement("footer");
   rodape.className = "pagina__rodape";
   rodape.innerHTML = `
-    <span class="pagina__rodape-texto">Como chegar, local e horários: veja na pág. ${PAGINA_INFO}</span>
     <a class="botao-info" href="#pagina-${PAGINA_INFO}" data-pagina="${PAGINA_INFO}">
       <span class="botao-info__mao" aria-hidden="true">☞</span> Informações
     </a>`;

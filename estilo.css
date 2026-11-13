@@ -4,8 +4,8 @@
    ============================================================ */
 
 :root {
-  --papel: #efd690;          /* folha amarela, do dourado do logo */
-  --papel-claro: #f6e6b4;
+  --papel: #f6eac4;          /* folha amarelo-clara, do dourado do logo */
+  --papel-claro: #fbf4dc;
   --tinta: #14285c;          /* tinta azul-marinho, do azul do logo */
   --tinta-suave: #3d4d7a;
   --fio: rgba(20, 40, 92, 0.85);
@@ -21,6 +21,8 @@
   --fonte-cursiva: "Pinyon Script", cursive;
 
   /* Textura de papel (granulado leve, desenhado pelo próprio navegador) */
+  /* Papel amassado: relevo de vincos iluminado de lado (luz e sombra), multiplicado sobre a cor da folha */
+  --amassado: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1400' height='900' viewBox='0 0 1400 900' preserveAspectRatio='none'%3E%3Cfilter id='a' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.006 0.008' numOctaves='5' seed='11' result='r'/%3E%3CfeDiffuseLighting in='r' lighting-color='%23fff' surfaceScale='9' result='l'%3E%3CfeDistantLight azimuth='225' elevation='58'/%3E%3C/feDiffuseLighting%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='0.7' intercept='0.42'/%3E%3CfeFuncG type='linear' slope='0.7' intercept='0.42'/%3E%3CfeFuncB type='linear' slope='0.7' intercept='0.42'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='1400' height='900' filter='url(%23a)'/%3E%3C/svg%3E");
   --textura: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.25 0 0 0 0 0.2 0 0 0 0 0.12 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
 }
 
@@ -63,7 +65,10 @@ html body.pg-presentes {
   padding: 1.6rem 2.2rem 2rem;
   background:
     var(--textura),
-    linear-gradient(100deg, #e6c877 0%, var(--papel-claro) 6%, var(--papel) 75%, #e3c46f 100%);
+    var(--amassado),
+    linear-gradient(100deg, #efdca3 0%, var(--papel-claro) 6%, var(--papel) 75%, #ecd89c 100%);
+  background-size: auto, cover, auto;
+  background-blend-mode: normal, multiply, normal;
   box-shadow:
     0 1px 2px rgba(0, 0, 0, 0.2),
     0 18px 40px rgba(0, 0, 0, 0.35);
@@ -1246,7 +1251,7 @@ html body.pg-presentes {
   }
 
   .capa__corpo {
-    grid-template-columns: 1.1fr 1.6fr 15rem;
+    grid-template-columns: 1.5fr 1fr 15rem;
     grid-template-rows: 100%;
     grid-template-areas: "texto foto lateral";
     gap: 1.4rem;
@@ -1262,17 +1267,38 @@ html body.pg-presentes {
     line-height: 1.5;
   }
 
+  /* A moldura fica na própria foto, para abraçar a foto inteira (sem faixas vazias dos lados) */
   .capa__figura {
     display: flex;
     flex-direction: column;
+    align-items: center;
     min-height: 0;
     margin: 0;
+    border: none;
+    padding: 0;
+    background: none;
   }
 
+  .capa__figura .capa__foto {
+    border: 1px solid var(--fio);
+    padding: 4px;
+    background: var(--papel-claro);
+  }
+
+  .capa__figura figcaption {
+    text-align: center;
+  }
+
+  /* Foto da capa (o pedido) sempre inteira: a moldura encolhe para caber, sem cortar */
   .capa__foto {
-    flex: 1;
+    flex: 1 1 0;
     height: auto;
     min-height: 0;
+    width: auto;
+    max-width: 100%;
+    align-self: center;
+    aspect-ratio: 857 / 1280;
+    object-fit: contain;
   }
 
   .capa__lateral {
@@ -1334,7 +1360,7 @@ html body.pg-presentes {
     width: auto;
     max-width: 100%;
     align-self: center;
-    aspect-ratio: 857 / 1280;
+    aspect-ratio: 960 / 1280;
     object-fit: contain;
     margin: 0;
   }
@@ -1734,7 +1760,8 @@ html body.pg-presentes {
 /* ================= CELULAR E TABLET: fotos inteiras, sem corte ================= */
 @media (max-width: 900px) {
   .historia__foto .foto--grande,
-  .perfil__foto img.foto--inteira {
+  .perfil__foto img.foto--inteira,
+  .capa__foto {
     height: auto;
     max-height: calc(var(--vh) * 75);
     width: auto;
@@ -1767,18 +1794,8 @@ html body.pg-presentes {
 
 .pagina__rodape {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  justify-content: flex-end;
   margin-top: 1.4rem;
-  padding-top: 0.5rem;
-  border-top: 3px double var(--fio);
-}
-
-.pagina__rodape-texto {
-  font-style: italic;
-  font-size: 0.85rem;
-  color: var(--tinta-suave);
 }
 
 /* Botão com cara de chamada impressa: faixa preta, letras em caixa-alta */
@@ -1817,15 +1834,13 @@ html body.pg-presentes {
 
 @media (max-width: 600px) {
   .pagina__rodape {
-    flex-direction: column;
-    text-align: center;
+    justify-content: center;
   }
 }
 
 @media (min-width: 901px) {
   .pagina__rodape {
-    margin-top: 0.7rem;
-    padding-top: 0.4rem;
+    margin-top: 0.6rem;
   }
 
   /* A marca d'água sobe um pouco para não ficar em cima do rodapé */
