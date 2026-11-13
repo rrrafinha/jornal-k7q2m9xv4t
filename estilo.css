@@ -199,6 +199,19 @@ html body.pg-presentes {
   font-size: 1.5rem;
   letter-spacing: 0;
   text-transform: none;
+  white-space: nowrap;
+}
+
+/* Logo do casal dos dois lados do nome do jornal, em todas as páginas internas */
+.pagina__topo span:nth-child(2)::before,
+.pagina__topo span:nth-child(2)::after {
+  content: "";
+  display: inline-block;
+  width: 0.95em;
+  height: 0.95em;
+  margin: 0 0.3em;
+  vertical-align: -0.12em;
+  background: url("imagens/logo.svg") center / contain no-repeat;
 }
 
 .pagina__topo span:last-child {
