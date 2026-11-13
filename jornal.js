@@ -15,6 +15,7 @@ const NOMES = [
   ["Alexandre", "Ele"],
   ["Nós dois", "Nós"],
   ["Presentes", "Presentes"],
+  ["Informações", "Info"],
 ];
 let atual = 0;
 
@@ -58,12 +59,26 @@ const LOGO = `
   </span>
   <span class="marca-dagua__data">20.03.27</span>`;
 
-paginas.forEach((pagina) => {
+// Rodapé de cada página com o botão "Informações" (como o "continua na pág." dos jornais).
+// A própria página de informações não leva o botão.
+const PAGINA_INFO = paginas.findIndex((p) => p.id === "pagina-6") + 1;
+
+paginas.forEach((pagina, i) => {
   const marca = document.createElement("div");
   marca.className = "marca-dagua";
   marca.setAttribute("aria-hidden", "true");
   marca.innerHTML = LOGO;
   pagina.appendChild(marca);
+
+  if (i + 1 === PAGINA_INFO) return;
+  const rodape = document.createElement("footer");
+  rodape.className = "pagina__rodape";
+  rodape.innerHTML = `
+    <span class="pagina__rodape-texto">Como chegar, local e horários: veja na pág. ${PAGINA_INFO}</span>
+    <a class="botao-info" href="#pagina-${PAGINA_INFO}" data-pagina="${PAGINA_INFO}">
+      <span class="botao-info__mao" aria-hidden="true">☞</span> Informações
+    </a>`;
+  pagina.appendChild(rodape);
 });
 
 // Índice do rodapé (um botão para cada página)

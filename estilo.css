@@ -1089,9 +1089,18 @@ html body.pg-presentes {
   }
 
   .folhear__item {
-    font-size: 0.66rem;
-    padding: 0.3rem 0.5rem;
-    letter-spacing: 0.05em;
+    font-size: 0.64rem;
+    padding: 0.3rem 0.36rem;
+    letter-spacing: 0.02em;
+  }
+
+  .folhear__indice {
+    gap: 0.2rem;
+  }
+
+  .folhear__seta {
+    width: 2rem;
+    height: 2rem;
   }
 
   .folhear__item .longo {
@@ -1177,7 +1186,8 @@ html body.pg-presentes {
   .perfil,
   .historia,
   .capa__corpo,
-  .classificados__layout {
+  .classificados__layout,
+  .info {
     flex: 1 1 0;
     min-height: 0;
   }
@@ -1737,6 +1747,143 @@ html body.pg-presentes {
     width: fit-content;
     max-width: 100%;
     margin-inline: auto;
+  }
+}
+
+/* Celular bem estreito: o índice de 6 páginas precisa caber inteiro */
+@media (max-width: 380px) {
+  .folhear {
+    gap: 0.25rem;
+  }
+
+  .folhear__item {
+    font-size: 0.6rem;
+    padding: 0.3rem 0.26rem;
+    letter-spacing: 0;
+  }
+}
+
+/* ================= RODAPÉ COM O BOTÃO "INFORMAÇÕES" ================= */
+
+.pagina__rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.4rem;
+  padding-top: 0.5rem;
+  border-top: 3px double var(--fio);
+}
+
+.pagina__rodape-texto {
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--tinta-suave);
+}
+
+/* Botão com cara de chamada impressa: faixa preta, letras em caixa-alta */
+.botao-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.35em 1em 0.3em;
+  background: var(--tinta);
+  color: var(--papel-claro);
+  border: 1px solid var(--tinta);
+  outline: 1px solid var(--tinta);
+  outline-offset: 2px;
+  font-family: var(--fonte-manchete);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.botao-info:hover,
+.botao-info:focus-visible {
+  background: var(--papel-claro);
+  color: var(--tinta);
+}
+
+.botao-info__mao {
+  font-size: 1.3em;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+@media (max-width: 600px) {
+  .pagina__rodape {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (min-width: 901px) {
+  .pagina__rodape {
+    margin-top: 0.7rem;
+    padding-top: 0.4rem;
+  }
+
+  /* A marca d'água sobe um pouco para não ficar em cima do rodapé */
+  .marca-dagua {
+    bottom: 3.4rem;
+  }
+}
+
+/* ================= PÁGINA 6: INFORMAÇÕES ================= */
+
+.info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2rem 1.6rem;
+  align-content: start;
+}
+
+.info__bloco {
+  border-top: 1px solid var(--fio);
+  padding-top: 0.6rem;
+}
+
+.info__titulo {
+  font-family: var(--fonte-manchete);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.info__bloco--destaque {
+  border: 1px solid var(--fio);
+  outline: 1px solid var(--fio);
+  outline-offset: 3px;
+  padding: 0.8rem;
+  text-align: center;
+}
+
+.info__bloco--destaque .texto {
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .info {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 901px) {
+  .info {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: min-content;
+    gap: 1.6rem 1.8rem;
+  }
+
+  .info__bloco .texto {
+    font-size: clamp(0.85rem, calc(var(--vh) * 1.9), 1.1rem);
   }
 }
 
