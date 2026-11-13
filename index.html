@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Pinyon+Script&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=IM+Fell+Double+Pica&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="estilo.css?v=202611122348">
-  <link rel="stylesheet" href="presentes.css?v=202611122348">
+  <link rel="stylesheet" href="estilo.css?v=202611122354">
+  <link rel="stylesheet" href="presentes.css?v=202611122354">
 </head>
 <body class="pg-presentes">
 
@@ -74,6 +74,18 @@
             <h3 class="nota__titulo">Data marcada</h3>
             <p class="nota__destaque">20 · 03 · 2027</p>
             <p class="texto">Sábado. <span class="a-definir">(Local e horário.)</span></p>
+
+            <!-- Contagem regressiva (o horário de chegada fica no jornal.js: DATA_CASAMENTO) -->
+            <div class="contagem" id="contagem" aria-live="off">
+              <p class="contagem__titulo">Faltam</p>
+              <div class="contagem__numeros">
+                <span class="contagem__casa"><b data-unidade="dias">000</b><small>dias</small></span>
+                <span class="contagem__casa"><b data-unidade="horas">00</b><small>horas</small></span>
+                <span class="contagem__casa"><b data-unidade="minutos">00</b><small>min.</small></span>
+                <span class="contagem__casa"><b data-unidade="segundos">00</b><small>seg.</small></span>
+              </div>
+              <p class="contagem__rodape">para o grande dia</p>
+            </div>
           </section>
 
           <section class="nota">
@@ -373,11 +385,11 @@
   <div class="aviso" id="aviso" role="status" aria-live="polite"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
-  <script src="presentes-dados.js?v=202611122348"></script>
-  <script src="pix.js?v=202611122348"></script>
-  <script src="presentes.js?v=202611122348"></script>
-  <script src="caca-palavras-dados.js?v=202611122348"></script>
-  <script src="caca-palavras.js?v=202611122348"></script>
-  <script src="jornal.js?v=202611122348"></script>
+  <script src="presentes-dados.js?v=202611122354"></script>
+  <script src="pix.js?v=202611122354"></script>
+  <script src="presentes.js?v=202611122354"></script>
+  <script src="caca-palavras-dados.js?v=202611122354"></script>
+  <script src="caca-palavras.js?v=202611122354"></script>
+  <script src="jornal.js?v=202611122354"></script>
 </body>
 </html>

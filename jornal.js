@@ -169,6 +169,38 @@ jornal.addEventListener("pointerup", (e) => {
 
 jornal.addEventListener("pointercancel", () => { toqueInicio = null; });
 
+// Contagem regressiva da capa. Troque o horário quando estiver definido
+// (formato: ano-mês-diaThora:minuto, com o fuso de Brasília -03:00).
+const DATA_CASAMENTO = new Date("2027-03-20T16:00:00-03:00");
+const contagem = document.getElementById("contagem");
+
+function atualizarContagem() {
+  if (!contagem) return;
+  const falta = DATA_CASAMENTO - Date.now();
+
+  if (falta <= 0) {
+    contagem.innerHTML = '<p class="contagem__fim">Extra! Extra! Hoje é o grande dia!</p>';
+    clearInterval(relogio);
+    return;
+  }
+
+  const s = Math.floor(falta / 1000);
+  const valores = {
+    dias: Math.floor(s / 86400),
+    horas: Math.floor(s / 3600) % 24,
+    minutos: Math.floor(s / 60) % 60,
+    segundos: s % 60,
+  };
+
+  for (const [unidade, valor] of Object.entries(valores)) {
+    const casa = contagem.querySelector(`[data-unidade="${unidade}"]`);
+    casa.textContent = String(valor).padStart(unidade === "dias" ? 3 : 2, "0");
+  }
+}
+
+const relogio = setInterval(atualizarContagem, 1000);
+atualizarContagem();
+
 // Abre na página do endereço (ex.: ...#pagina-5 abre direto nos presentes)
 const doEndereco = Number((location.hash.match(/pagina-(\d+)/) || [])[1]);
 irPara(doEndereco ? doEndereco - 1 : 0);

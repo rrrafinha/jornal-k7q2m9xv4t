@@ -1329,6 +1329,38 @@ html body.pg-presentes {
     scrollbar-width: thin;
   }
 
+  /* Coluna da direita mais compacta, para caber a contagem regressiva */
+  .capa__lateral .nota--caixa {
+    padding: 0.5rem 0.6rem;
+  }
+
+  .capa__lateral .nota + .nota {
+    padding-top: 0.55rem;
+    margin-top: 0.55rem;
+  }
+
+  .capa__lateral .nota__titulo {
+    margin-bottom: 0.25rem;
+  }
+
+  .capa__lateral .capa__indice {
+    gap: 0.2rem;
+  }
+
+  .capa__lateral .capa__indice a {
+    font-size: 0.82rem;
+  }
+
+  .capa__lateral .nota__expediente {
+    font-size: 0.76rem;
+    line-height: 1.45;
+  }
+
+  .capa__lateral .contagem {
+    margin-top: 0.45rem;
+    padding-top: 0.4rem;
+  }
+
   /* ---------- Perfis: foto | texto | caça-palavras ---------- */
   .perfil {
     grid-template-columns: 1fr 1.1fr 1.15fr;
@@ -1903,6 +1935,78 @@ html body.pg-presentes {
 .botao-mapa:focus-visible {
   background: var(--tinta);
   color: var(--papel-claro);
+}
+
+/* ================= CONTAGEM REGRESSIVA DA CAPA =================
+   Números em caixinhas, como blocos de tipo móvel das gráficas antigas */
+
+.contagem {
+  margin-top: 0.6rem;
+  padding-top: 0.5rem;
+  border-top: 3px double var(--fio);
+  text-align: center;
+}
+
+.contagem__titulo,
+.contagem__rodape {
+  font-family: var(--fonte-manchete);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.contagem__rodape {
+  font-family: var(--fonte-texto);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.contagem__numeros {
+  display: flex;
+  justify-content: center;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+}
+
+.contagem__casa {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 2.6rem;
+}
+
+.contagem__casa b {
+  display: block;
+  width: 100%;
+  padding: 0.12rem 0.2rem 0.05rem;
+  background: var(--tinta);
+  color: var(--papel-claro);
+  outline: 1px solid var(--tinta);
+  outline-offset: 2px;
+  font-family: var(--fonte-manchete);
+  font-size: 1.15rem;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.contagem__casa small {
+  margin-top: 0.3rem;
+  font-size: 0.56rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.contagem__fim {
+  font-family: var(--fonte-manchete);
+  font-weight: 900;
+  font-size: 1rem;
+  text-transform: uppercase;
 }
 
 /* ================= RODAPÉ COM O BOTÃO "INFORMAÇÕES" ================= */
