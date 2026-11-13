@@ -8,12 +8,13 @@ const botaoAnterior = document.getElementById("anterior");
 const botaoProxima = document.getElementById("proxima");
 const indice = document.getElementById("indice");
 
-// Nome de cada página no índice do rodapé: [completo, curto (celular)]
+// Nome de cada página no índice do rodapé: [completo, curto (celular)].
+// O usuário quer os mesmos nomes no celular e no computador.
 const NOMES = [
   ["Capa", "Capa"],
-  ["Mariana", "Ela"],
-  ["Alexandre", "Ele"],
-  ["Nós dois", "Nós"],
+  ["Mariana", "Mariana"],
+  ["Alexandre", "Alexandre"],
+  ["Nós dois", "Nós dois"],
   ["Presentes", "Presentes"],
 ];
 let atual = 0;
@@ -120,6 +121,8 @@ function irPara(n) {
     b.classList.toggle("folhear__item--ativo", i === n);
     b.setAttribute("aria-current", i === n ? "page" : "false");
   });
+  // Celular estreito: se o índice não couber inteiro, rola até a aba da página atual
+  botoesIndice[n]?.scrollIntoView({ block: "nearest", inline: "nearest" });
 
   botaoAnterior.disabled = n === 0;
   botaoProxima.disabled = n >= ULTIMA_FOLHEAVEL;

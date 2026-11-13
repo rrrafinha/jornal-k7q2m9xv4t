@@ -302,7 +302,7 @@ html body.pg-presentes {
 }
 
 .historia__anel img {
-  height: min(calc(var(--vh) * 19), 200px);
+  height: min(calc(var(--vh) * 15), 165px);
   width: auto;
   max-width: 100%;
 }
@@ -1094,9 +1094,9 @@ html body.pg-presentes {
   }
 
   .folhear__item {
-    font-size: 0.64rem;
-    padding: 0.3rem 0.36rem;
-    letter-spacing: 0.02em;
+    font-size: 0.6rem;
+    padding: 0.3rem 0.3rem;
+    letter-spacing: 0;
   }
 
   .folhear__indice {
@@ -1352,16 +1352,21 @@ html body.pg-presentes {
     margin-top: 0;
   }
 
-  /* Foto do pedido sempre inteira: a moldura encolhe para caber, sem cortar */
-  .historia__foto .foto--grande {
+  /* Foto grande sempre inteira: a caixa ocupa o espaço que sobra e a foto
+     encolhe dentro dela mantendo o formato (sem faixas e sem corte) */
+  .historia__moldura {
     flex: 1 1 0;
-    height: auto;
     min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .historia__foto .foto--grande {
     width: auto;
+    height: auto;
     max-width: 100%;
-    align-self: center;
-    aspect-ratio: 960 / 1280;
-    object-fit: contain;
+    max-height: 100%;
     margin: 0;
   }
 
@@ -1391,7 +1396,7 @@ html body.pg-presentes {
 
   /* A história do casal corre em duas colunas, como matéria de jornal */
   .historia {
-    grid-template-columns: 0.75fr 1.6fr;
+    grid-template-columns: 0.68fr 1.75fr;
   }
 
   .historia__texto {
@@ -1784,10 +1789,57 @@ html body.pg-presentes {
   }
 
   .folhear__item {
-    font-size: 0.6rem;
-    padding: 0.3rem 0.26rem;
+    font-size: 0.56rem;
+    padding: 0.3rem 0.22rem;
     letter-spacing: 0;
   }
+}
+
+/* ================= O GRANDE DIA: endereço e botão do mapa ================= */
+
+/* Foto do local à esquerda; endereço e botão do mapa à direita */
+.local {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-top: 0.4rem;
+}
+
+.local .historia__anel {
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.local__texto {
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.local__endereco {
+  display: block;
+  margin-bottom: 0.45rem;
+}
+
+/* Botão pequeno, contornado, no estilo das chamadas do jornal */
+.botao-mapa {
+  display: inline-block;
+  padding: 0.15em 0.7em;
+  border: 1px solid var(--tinta);
+  color: var(--tinta);
+  font-family: var(--fonte-manchete);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s;
+}
+
+.botao-mapa:hover,
+.botao-mapa:focus-visible {
+  background: var(--tinta);
+  color: var(--papel-claro);
 }
 
 /* ================= RODAPÉ COM O BOTÃO "INFORMAÇÕES" ================= */

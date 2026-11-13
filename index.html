@@ -13,8 +13,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Pinyon+Script&family=IM+Fell+English:ital@0;1&family=IM+Fell+English+SC&family=IM+Fell+Double+Pica&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="estilo.css?v=202611122322">
-  <link rel="stylesheet" href="presentes.css?v=202611122322">
+  <link rel="stylesheet" href="estilo.css?v=202611122332">
+  <link rel="stylesheet" href="presentes.css?v=202611122332">
 </head>
 <body class="pg-presentes">
 
@@ -186,7 +186,9 @@
           <blockquote class="citacao">
             “E até quem me vê lendo o jornal na fila do pão sabe que eu te encontrei”
           </blockquote>
-          <img class="foto foto--grande" src="imagens/capa-mirante.jpg" alt="Alexandre e Mariana se beijando abraçados no mirante, com o mar ao fundo">
+          <div class="historia__moldura">
+            <img class="foto foto--grande" src="imagens/capa-mirante.jpg" alt="Alexandre e Mariana se beijando abraçados no mirante, com o mar ao fundo">
+          </div>
         </div>
 
         <div class="historia__texto">
@@ -206,7 +208,19 @@
           </section>
           <section>
             <h3 class="titulo">O grande dia</h3>
-            <p class="texto"><b>Sábado, 20 de março de 2027.</b> <span class="a-definir">(Local e horário.)</span></p>
+            <p class="texto"><b>Sábado, 20 de março de 2027.</b> <span class="a-definir">(Horário.)</span></p>
+            <!-- Foto do local com o endereço e o botão do mapa ao lado.
+                 Endereço: troque o texto e o "query=" do link do mapa pelo endereço real -->
+            <div class="local">
+              <figure class="historia__anel">
+                <img class="foto" src="imagens/local-casa.jpg" alt="Casarão branco de dois andares com janelas azuis em arco, cercado de árvores, onde será o casamento">
+                <figcaption>O cenário do grande dia.</figcaption>
+              </figure>
+              <p class="local__texto">
+                <span class="local__endereco a-definir">(Endereço do local.)</span>
+                <a class="botao-mapa" href="https://www.google.com/maps/search/?api=1&amp;query=" target="_blank" rel="noopener">⌖ Ver no mapa</a>
+              </p>
+            </div>
           </section>
           <p class="assinatura">Alexandre &amp; Mariana</p>
           <figure class="historia__anel">
@@ -364,11 +378,11 @@
   <div class="aviso" id="aviso" role="status" aria-live="polite"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
-  <script src="presentes-dados.js?v=202611122322"></script>
-  <script src="pix.js?v=202611122322"></script>
-  <script src="presentes.js?v=202611122322"></script>
-  <script src="caca-palavras-dados.js?v=202611122322"></script>
-  <script src="caca-palavras.js?v=202611122322"></script>
-  <script src="jornal.js?v=202611122322"></script>
+  <script src="presentes-dados.js?v=202611122332"></script>
+  <script src="pix.js?v=202611122332"></script>
+  <script src="presentes.js?v=202611122332"></script>
+  <script src="caca-palavras-dados.js?v=202611122332"></script>
+  <script src="caca-palavras.js?v=202611122332"></script>
+  <script src="jornal.js?v=202611122332"></script>
 </body>
 </html>
